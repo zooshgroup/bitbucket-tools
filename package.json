@@ -1,0 +1,26 @@
+{
+    "name": "zoosh-bitbucket-tools",
+    "version": "1.0.0",
+    "private": true,
+    "packageManager": "yarn@3.6.3",
+    "description": "zoosh-boilerplate to upload a report to bitbucket",
+    "engines": {
+        "node": "^20.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:zooshgroup/bitbucket-tools.git"
+    },
+    "license": "GPL-3.0",
+    "homepage": "https://github.com/zooshgroup/bitbucket-tools",
+    "devDependencies": {
+        "@types/command-line-args": "5.2.3",
+        "@types/node": "20.11.25",
+        "command-line-args": "5.2.1",
+        "cross-env": "7.0.3",
+        "http-proxy-agent": "7.0.2",
+        "node-fetch": "^3.3.2",
+        "prettier": "2.7.1",
+        "typescript": "5.2.2"
+    }
+}
