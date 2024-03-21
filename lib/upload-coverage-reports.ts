@@ -1,6 +1,6 @@
-import uploadReportToBitbucket from "./upload-report-to-bitbucket";
 import fs from 'fs/promises';
 import commandLineArgs from 'command-line-args';
+import uploadReportToBitbucket from "./upload-report-to-bitbucket";
 
 const optionDefinitions = [
   { name: 'name', alias: 'n', type: String },
