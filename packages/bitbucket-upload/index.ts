@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import commandLineArgs from 'command-line-args';
-import uploadReportToBitbucket from "./upload-report-to-bitbucket";
+import uploadReportToBitbucket from "zoosh-publish-report";
 
 const optionDefinitions = [
   { name: 'name', alias: 'n', type: String },
@@ -55,4 +55,4 @@ async function uploadReport() {
   }
 }
 
-export default uploadReport;
+uploadReport();

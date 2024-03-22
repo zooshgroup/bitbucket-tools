@@ -1,5 +1,5 @@
 {
-    "name": "zoosh-bitbucket-tools",
+    "name": "zoosh-bitbucket-upload",
     "version": "1.0.0",
     "private": true,
     "packageManager": "yarn@3.6.3",
@@ -7,6 +7,13 @@
     "engines": {
         "node": "^20.0.0"
     },
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "npx tsc"
+    },
+    "files": [
+        "dist"
+    ],
     "repository": {
         "type": "git",
         "url": "git@github.com:zooshgroup/bitbucket-tools.git"
@@ -14,6 +21,10 @@
     "license": "GPL-3.0",
     "homepage": "https://github.com/zooshgroup/bitbucket-tools",
     "devDependencies": {
-        "prettier": "2.7.1"
-    }    
+        "@types/command-line-args": "5.2.3",
+        "command-line-args": "5.2.1",
+        "cross-env": "7.0.3",
+        "tsup": "^8.0.2",
+        "typescript": "^4.5.4"
+    }
 }
