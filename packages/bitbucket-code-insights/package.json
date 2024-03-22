@@ -1,5 +1,5 @@
 {
-    "name": "zoosh-publish-report",
+    "name": "@zooshdigital/bitbucket-code-insights",
     "version": "1.0.0",
     "private": true,
     "packageManager": "yarn@3.6.3",
