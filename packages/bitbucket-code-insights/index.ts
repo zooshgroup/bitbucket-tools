@@ -1,7 +1,8 @@
 import fetch from 'node-fetch';
 import { HttpProxyAgent } from 'http-proxy-agent';
+import { BitbucketReportBody } from "./types"
 
-async function uploadReportToBitbucket(externalId: string, body: {}){
+async function uploadReportToBitbucket(externalId: string, body: BitbucketReportBody){
 
   const url = `http://api.bitbucket.org/2.0/repositories/${process.env.BITBUCKET_REPO_FULL_NAME}/commit/${process.env.BITBUCKET_COMMIT}/reports/${externalId}`;
 
