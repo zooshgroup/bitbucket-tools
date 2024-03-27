@@ -11,6 +11,9 @@
     "scripts": {
         "build": "npx tsc"
     },
+    "bin": {
+        "start": "dist/index.js"
+    },
     "files": [
         "dist"
     ],
@@ -24,7 +27,6 @@
         "@types/command-line-args": "5.2.3",
         "command-line-args": "5.2.1",
         "cross-env": "7.0.3",
-        "tsup": "^8.0.2",
         "typescript": "^4.5.4"
     }
 }

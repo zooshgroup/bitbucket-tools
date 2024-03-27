@@ -14,6 +14,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zooshdigital/bitbucket-code-insights@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@zooshdigital/bitbucket-code-insights@workspace:."
+  dependencies:
+    "@types/node": ^20.11.30
+    http-proxy-agent: 7.0.2
+    node-fetch: ^3.3.2
+    typescript: ^4.5.4
+  languageName: unknown
+  linkType: soft
+
 "agent-base@npm:^7.1.0":
   version: 7.1.0
   resolution: "agent-base@npm:7.1.0"
@@ -96,6 +107,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^4.5.4":
+  version: 4.9.5
+  resolution: "typescript@npm:4.9.5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: ee000bc26848147ad423b581bd250075662a354d84f0e06eb76d3b892328d8d4440b7487b5a83e851b12b255f55d71835b008a66cbf8f255a11e4400159237db
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^4.5.4#~builtin<compat/typescript>":
+  version: 4.9.5
+  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=289587"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 1f8f3b6aaea19f0f67cba79057674ba580438a7db55057eb89cc06950483c5d632115c14077f6663ea76fd09fce3c190e6414bb98582ec80aa5a4eaf345d5b68
+  languageName: node
+  linkType: hard
+
 "undici-types@npm:~5.26.4":
   version: 5.26.5
   resolution: "undici-types@npm:5.26.5"
@@ -109,13 +140,3 @@ __metadata:
   checksum: 21ab5ea08a730a2ef8023736afe16713b4f2023ec1c7085c16c8e293ee17ed085dff63a0ad8722da30c99c4ccbd4ccd1b2e79c861829f7ef2963d7de7004c2cb
   languageName: node
   linkType: hard
-
-"zoosh-publish-report@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "zoosh-publish-report@workspace:."
-  dependencies:
-    "@types/node": ^20.11.30
-    http-proxy-agent: 7.0.2
-    node-fetch: ^3.3.2
-  languageName: unknown
-  linkType: soft
