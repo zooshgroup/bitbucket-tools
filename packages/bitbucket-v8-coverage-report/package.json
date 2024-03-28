@@ -3,7 +3,19 @@
     "version": "1.0.0",
     "private": false,
     "packageManager": "yarn@3.6.3",
-    "description": "zoosh-boilerplate to upload a report to bitbucket",
+    "description": "Command-line tool to upload coverage reports to Bitbucket",
+    "keywords": [
+        "Bitbucket",
+        "upload",
+        "coverage",
+        "report",
+        "command-line",
+        "@zooshdigital/bitbucket-code-insights",
+        "typescript"
+    ],
+    "author": {
+        "name": "Zoosh Group"
+      },
     "engines": {
         "node": "^20.0.0"
     },

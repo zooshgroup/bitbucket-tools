@@ -3,7 +3,19 @@
     "version": "1.0.0",
     "private": false,
     "packageManager": "yarn@3.6.3",
-    "description": "zoosh-boilerplate to upload a report to bitbucket",
+    "description": "Function to upload a coverage report to Bitbucket",
+    "author": {
+        "name": "Zoosh Group"
+      },
+    "keywords": [
+        "Bitbucket",
+        "upload",
+        "coverage",
+        "report",
+        "node-fetch",
+        "http-proxy-agent",
+        "typescript"
+    ],
     "engines": {
         "node": "^20.0.0"
     },
@@ -16,7 +28,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git@github.com:zooshgroup/bitbucket-tools.git"
+        "url": "git+ssh://git@github.com/zooshgroup/bitbucket-tools.git"
     },
     "license": "GPL-3.0",
     "homepage": "https://github.com/zooshgroup/bitbucket-tools",
