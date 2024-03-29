@@ -4,7 +4,7 @@ export interface BitbucketReportData {
     value: number;
   }
   
-  export interface BitbucketReportBody {
+export interface BitbucketReportBody {
     title: string;
     report_type: string;
     details: string;
