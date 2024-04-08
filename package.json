@@ -6,7 +6,7 @@
     "description": "zoosh-boilerplate to upload a report to Bitbucket",
     "author": {
         "name": "Zoosh Group"
-      },
+    },
     "engines": {
         "node": "^20.0.0"
     },

@@ -12,11 +12,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^20.11.30":
+  version: 20.11.30
+  resolution: "@types/node@npm:20.11.30"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: 7597767aa3e44b0f1bf62efa522dd17741135f283c11de6a20ead8bb7016fb4999cc30adcd8f2bb29ebb216906c92894346ccd187de170927dc1e212d2c07c81
+  languageName: node
+  linkType: hard
+
+"@zooshdigital/bitbucket-code-insights@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@zooshdigital/bitbucket-code-insights@npm:1.0.1"
+  checksum: af6ce900e5f1d28d49a9bace10a3b1a546612548e0fec3cbd333d9e20a158505ca1b26854868beb562d94efa0b7342891aeda7320ccba6e6a0281cb719195017
+  languageName: node
+  linkType: hard
+
 "@zooshdigital/bitbucket-v8-coverage-report@workspace:.":
   version: 0.0.0-use.local
   resolution: "@zooshdigital/bitbucket-v8-coverage-report@workspace:."
   dependencies:
     "@types/command-line-args": 5.2.3
+    "@types/node": ^20.11.30
+    "@zooshdigital/bitbucket-code-insights": ^1.0.1
     command-line-args: 5.2.1
     cross-env: 7.0.3
     typescript: ^4.5.4
@@ -137,6 +155,13 @@ __metadata:
   version: 4.0.0
   resolution: "typical@npm:4.0.0"
   checksum: a242081956825328f535e6195a924240b34daf6e7fdb573a1809a42b9f37fb8114fa99c7ab89a695e0cdb419d4149d067f6723e4b95855ffd39c6c4ca378efb3
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: 3192ef6f3fd5df652f2dc1cd782b49d6ff14dc98e5dced492aa8a8c65425227da5da6aafe22523c67f035a272c599bb89cfe803c1db6311e44bed3042fc25487
   languageName: node
   linkType: hard
 
