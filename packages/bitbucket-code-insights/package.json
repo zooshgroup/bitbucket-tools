@@ -34,7 +34,7 @@
     "homepage": "https://github.com/zooshgroup/bitbucket-tools",
     "dependencies": {
         "http-proxy-agent": "7.0.2",
-        "node-fetch": "^3.3.2"
+        "node-fetch": "2.7.0"
     },
     "devDependencies": {
         "@types/node": "^20.11.30",
