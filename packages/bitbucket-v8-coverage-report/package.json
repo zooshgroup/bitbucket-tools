@@ -39,8 +39,8 @@
     },
     "devDependencies": {
         "@types/command-line-args": "5.2.3",
-        "@types/node": "^20.11.30",
+        "@types/node": "20.11.30",
         "cross-env": "7.0.3",
-        "typescript": "^4.5.4"
+        "typescript": "4.5.4"
     }
 }
