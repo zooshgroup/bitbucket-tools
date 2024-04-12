@@ -18,9 +18,9 @@ yarn add @zooshdigital/bitbucket-code-insights
 
 ## Usage
 
-### uploadReport Function
+### uploadReportToBitbucket Function
 
-The uploadReport function provided by Zoosh Bitbucket Tools enables you to upload coverage reports to Bitbucket pipelines. Below is an example of how to use this function
+The uploadReport function provided by Zoosh Bitbucket Tools enables you to upload coverage reports to Bitbucket pipelines. Below is an example of how to use this function.
 
 ### Report Body Format
 
@@ -49,10 +49,9 @@ Where data is an array of objects, each containing the title, type, and value fi
 ```typescript
 import uploadReportToBitbucket from '@zooshdigital/bitbucket-code-insights';
 
-// Usage example
 const externalId = 'your_external_id';
 const body = {
-  // Your report body
+  // Report body
 };
 
 uploadReportToBitbucket(externalId, body)
