@@ -25,7 +25,7 @@ async function uploadReport() {
       title: 'Coverage',
       report_type: 'COVERAGE',
       details: 'Coverage report for the build.',
-      result: 'FAILED',
+      result: 'PASSED',
       data: [
         {
           title: 'Lines',
