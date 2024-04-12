@@ -4,9 +4,8 @@
       "module": "commonjs",
       "outDir": "./dist",
       "strict": true,
-      "esModuleInterop": true,
-      "allowJs": true
+      "esModuleInterop": true
     },
-    "include": ["index.ts", "cli.js"],
+    "include": ["index.ts"],
     "exclude": ["node_modules", "dist"]
   }
