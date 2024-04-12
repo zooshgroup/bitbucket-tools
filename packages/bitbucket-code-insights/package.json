@@ -16,7 +16,7 @@
         "typescript"
     ],
     "engines": {
-        "node": "^20.0.0"
+        "node": "18.x || 20.x"
     },
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

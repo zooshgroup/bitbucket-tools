@@ -1,6 +1,6 @@
 {
     "name": "@zooshdigital/bitbucket-v8-coverage-report",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "packageManager": "yarn@3.6.3",
     "description": "Command-line tool to upload coverage reports to Bitbucket",
     "keywords": [
@@ -16,7 +16,7 @@
         "name": "Zoosh Group"
     },
     "engines": {
-        "node": "^20.0.0"
+        "node": "18.x || 20.x"
     },
     "main": "dist/index.js",
     "scripts": {
