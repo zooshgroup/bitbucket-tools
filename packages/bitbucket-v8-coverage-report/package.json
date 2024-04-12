@@ -1,6 +1,6 @@
 {
     "name": "@zooshdigital/bitbucket-v8-coverage-report",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "packageManager": "yarn@3.6.3",
     "description": "Command-line tool to upload coverage reports to Bitbucket",
     "keywords": [
@@ -24,7 +24,7 @@
         "start": "node dist/index.js"
     },
     "bin": {
-        "start": "dist/index.js"
+        "bitbucket-v8-coverage-report": "dist/index.js"
     },
     "files": [
         "dist"
