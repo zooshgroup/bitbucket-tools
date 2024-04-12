@@ -1,6 +1,6 @@
 {
     "name": "@zooshdigital/bitbucket-v8-coverage-report",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "packageManager": "yarn@3.6.3",
     "description": "Command-line tool to upload coverage reports to Bitbucket",
     "keywords": [
@@ -18,14 +18,12 @@
     "engines": {
         "node": "^20.0.0"
     },
-    "main": "dist/index.js",
+    "main": "dist/cli.js",
     "scripts": {
         "build": "npx tsc",
         "start": "node dist/index.js"
     },
-    "bin": {
-        "bitbucket-v8-coverage-report": "dist/index.js"
-    },
+    "bin": "dist/cli.js",
     "files": [
         "dist"
     ],
@@ -37,7 +35,9 @@
     "homepage": "https://github.com/zooshgroup/bitbucket-tools",
     "dependencies": {
         "@zooshdigital/bitbucket-code-insights": "^1.0.1",
-        "command-line-args": "5.2.1"
+        "command-line-args": "5.2.1",
+        "import-local": "^3.1.0",
+        "npmlog": "^7.0.1"
     },
     "devDependencies": {
         "@types/command-line-args": "5.2.3",
