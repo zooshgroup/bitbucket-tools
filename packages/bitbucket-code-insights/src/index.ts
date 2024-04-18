@@ -1,4 +1,5 @@
-import fetch from 'node-fetch';
+import fetch from 'node-fetch'
+import fs from 'fs';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { BitbucketReportBody } from "./types"
 
@@ -11,10 +12,12 @@ async function uploadReportToBitbucket(externalId: string, body: BitbucketReport
 
   console.log('URL:', url);
 
-  const proxyUrl = `${bitbucketProxyAddress}:${bitbucketProxyPort}`;
+  const isRunningInDockerContainer = fs.readFileSync('/proc/self/cgroup', 'utf8').indexOf('docker') !== -1;
+
+  const proxyAddress = isRunningInDockerContainer ? 'host.docker.internal' : bitbucketProxyAddress;
 
   const response = await fetch(url, {
-    agent: new HttpProxyAgent(proxyUrl),
+    agent: new HttpProxyAgent(`${proxyAddress}:${bitbucketProxyPort}`),
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
