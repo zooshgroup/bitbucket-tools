@@ -16,7 +16,7 @@ async function uploadReport() {
     const { name, path: reportPath } = args;
 
     if (!name || !reportPath) {
-      throw new Error('Usage: uploadReport -n <report-name> -p <report-path>');
+      throw new Error('Bitbucket v8 Coverage Report - Usage: uploadReport -n <report-name> -p <report-path>');
     }
 
     const coverageResults = JSON.parse(await fs.readFile(reportPath, 'utf8'));
@@ -52,7 +52,7 @@ async function uploadReport() {
 
     await uploadReportToBitbucket(name, body);
   } catch (error) {
-    console.error('Error uploading report:', error);
+    console.error('Bitbucket v8 Coverage Report - Error uploading report:', error);
     process.exit(1);
   }
 }
