@@ -4,12 +4,17 @@ import { BitbucketReportBody } from "./types"
 
 async function uploadReportToBitbucket(externalId: string, body: BitbucketReportBody){
 
+  const bitbucketProxyAddress = 'http://localhost';
+  const bitbucketProxyPort = 29418; 
+
   const url = `http://api.bitbucket.org/2.0/repositories/${process.env.BITBUCKET_REPO_FULL_NAME}/commit/${process.env.BITBUCKET_COMMIT}/reports/${externalId}`;
 
   console.log('url', url);
 
+  const proxyUrl = `${bitbucketProxyAddress}:${bitbucketProxyPort}`;
+
   const response = await fetch(url, {
-    agent: new HttpProxyAgent('http://localhost:29418'),
+    agent: new HttpProxyAgent(proxyUrl),
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
