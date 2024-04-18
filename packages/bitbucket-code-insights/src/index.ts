@@ -9,7 +9,7 @@ async function uploadReportToBitbucket(externalId: string, body: BitbucketReport
 
   const url = `http://api.bitbucket.org/2.0/repositories/${process.env.BITBUCKET_REPO_FULL_NAME}/commit/${process.env.BITBUCKET_COMMIT}/reports/${externalId}`;
 
-  console.log('url', url);
+  console.log('URL:', url);
 
   const proxyUrl = `${bitbucketProxyAddress}:${bitbucketProxyPort}`;
 
