@@ -37,6 +37,21 @@ This takes the following arguments:
 npx bitbucket-v8-coverage-report -n reportName -p ./path
 ```
 
+## Running within a Docker Container
+
+You can run the script inside a Docker container. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Below is an example of how to run the container:
+
+```bash
+docker run --rm \
+  -e BITBUCKET_REPO_FULL_NAME=<repo_full_name> \
+  -e BITBUCKET_COMMIT=<commit_hash> \
+  <docker_image_name>
+```
+
+Replace <repo_full_name> with the full name of your Bitbucket repository, <commit_hash> with the commit hash you want to analyze, and <docker_image_name> with the name of the Docker image you built.
+
+## Authentication 
+
 Your requests will automatically be routed through a proxy server running alongside every pipeline on 'localhost:29418'. This proxy server adds a valid Auth-Header to your requests, eliminating the need for additional authentication configurations.
  
 See more in the official Bitbucket documentation [here](https://support.atlassian.com/bitbucket-cloud/docs/code-insights/).
