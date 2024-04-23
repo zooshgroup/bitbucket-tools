@@ -1,6 +1,6 @@
 {
     "name": "@zooshdigital/bitbucket-code-insights",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "packageManager": "yarn@3.6.3",
     "description": "Function to upload a coverage report to Bitbucket",
     "author": {
