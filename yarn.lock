@@ -5,7 +5,7 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"prettier@npm:^3.2.5":
+"prettier@npm:3.2.5":
   version: 3.2.5
   resolution: "prettier@npm:3.2.5"
   bin:
@@ -18,6 +18,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "zoosh-bitbucket-tools@workspace:."
   dependencies:
-    prettier: ^3.2.5
+    prettier: 3.2.5
   languageName: unknown
   linkType: soft

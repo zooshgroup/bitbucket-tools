@@ -16,6 +16,9 @@ async function uploadReportToBitbucket(externalId: string, body: BitbucketReport
 
   const proxyAddress = isRunningInDockerContainer ? 'host.docker.internal' : bitbucketProxyAddress;
 
+  console.log("ProxyAddress:", proxyAddress);
+  console.log("isRunningInDockerContainer:", isRunningInDockerContainer);
+
   const response = await fetch(url, {
     agent: new HttpProxyAgent(`${proxyAddress}:${bitbucketProxyPort}`),
     method: 'PUT',
