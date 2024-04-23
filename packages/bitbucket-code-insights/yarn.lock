@@ -5,6 +5,25 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@types/node-fetch@npm:^2.6.11":
+  version: 2.6.11
+  resolution: "@types/node-fetch@npm:2.6.11"
+  dependencies:
+    "@types/node": "*"
+    form-data: ^4.0.0
+  checksum: 180e4d44c432839bdf8a25251ef8c47d51e37355ddd78c64695225de8bc5dc2b50b7bb855956d471c026bb84bd7295688a0960085e7158cbbba803053492568b
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:*":
+  version: 20.12.7
+  resolution: "@types/node@npm:20.12.7"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: 7cc979f7e2ca9a339ec71318c3901b9978555257929ef3666987f3e447123bc6dc92afcc89f6347e09e07d602fde7d51bcddea626c23aa2bb74aeaacfd1e1686
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:20.11.30":
   version: 20.11.30
   resolution: "@types/node@npm:20.11.30"
@@ -19,9 +38,10 @@ __metadata:
   resolution: "@zooshdigital/bitbucket-code-insights@workspace:."
   dependencies:
     "@types/node": 20.11.30
+    "@types/node-fetch": ^2.6.11
     http-proxy-agent: 7.0.2
     node-fetch: 2.7.0
-    typescript: 4.5.4
+    typescript: 4.6.2
   languageName: unknown
   linkType: soft
 
@@ -31,6 +51,22 @@ __metadata:
   dependencies:
     debug: ^4.3.4
   checksum: 51c158769c5c051482f9ca2e6e1ec085ac72b5a418a9b31b4e82fe6c0a6699adb94c1c42d246699a587b3335215037091c79e0de512c516f73b6ea844202f037
+  languageName: node
+  linkType: hard
+
+"asynckit@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "asynckit@npm:0.4.0"
+  checksum: 7b78c451df768adba04e2d02e63e2d0bf3b07adcd6e42b4cf665cb7ce899bedd344c69a1dcbce355b5f972d597b25aaa1c1742b52cffd9caccb22f348114f6be
+  languageName: node
+  linkType: hard
+
+"combined-stream@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "combined-stream@npm:1.0.8"
+  dependencies:
+    delayed-stream: ~1.0.0
+  checksum: 49fa4aeb4916567e33ea81d088f6584749fc90c7abec76fd516bf1c5aa5c79f3584b5ba3de6b86d26ddd64bae5329c4c7479343250cfe71c75bb366eae53bb7c
   languageName: node
   linkType: hard
 
@@ -46,6 +82,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"delayed-stream@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "delayed-stream@npm:1.0.0"
+  checksum: 46fe6e83e2cb1d85ba50bd52803c68be9bd953282fa7096f51fc29edd5d67ff84ff753c51966061e5ba7cb5e47ef6d36a91924eddb7f3f3483b1c560f77a0020
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "form-data@npm:4.0.0"
+  dependencies:
+    asynckit: ^0.4.0
+    combined-stream: ^1.0.8
+    mime-types: ^2.1.12
+  checksum: 01135bf8675f9d5c61ff18e2e2932f719ca4de964e3be90ef4c36aacfc7b9cb2fceb5eca0b7e0190e3383fe51c5b37f4cb80b62ca06a99aaabfcfd6ac7c9328c
+  languageName: node
+  linkType: hard
+
 "http-proxy-agent@npm:7.0.2":
   version: 7.0.2
   resolution: "http-proxy-agent@npm:7.0.2"
@@ -53,6 +107,22 @@ __metadata:
     agent-base: ^7.1.0
     debug: ^4.3.4
   checksum: 670858c8f8f3146db5889e1fa117630910101db601fff7d5a8aa637da0abedf68c899f03d3451cac2f83bcc4c3d2dabf339b3aa00ff8080571cceb02c3ce02f3
+  languageName: node
+  linkType: hard
+
+"mime-db@npm:1.52.0":
+  version: 1.52.0
+  resolution: "mime-db@npm:1.52.0"
+  checksum: 0d99a03585f8b39d68182803b12ac601d9c01abfa28ec56204fa330bc9f3d1c5e14beb049bafadb3dbdf646dfb94b87e24d4ec7b31b7279ef906a8ea9b6a513f
+  languageName: node
+  linkType: hard
+
+"mime-types@npm:^2.1.12":
+  version: 2.1.35
+  resolution: "mime-types@npm:2.1.35"
+  dependencies:
+    mime-db: 1.52.0
+  checksum: 89a5b7f1def9f3af5dad6496c5ed50191ae4331cc5389d7c521c8ad28d5fdad2d06fd81baf38fed813dc4e46bb55c8145bb0ff406330818c9cf712fb2e9b3836
   languageName: node
   linkType: hard
 
@@ -84,23 +154,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.5.4":
-  version: 4.5.4
-  resolution: "typescript@npm:4.5.4"
+"typescript@npm:4.6.2":
+  version: 4.6.2
+  resolution: "typescript@npm:4.6.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 59f3243f9cd6fe3161e6150ff6bf795fc843b4234a655dbd938a310515e0d61afd1ac942799e7415e4334255e41c2c49b7dd5d9fd38a17acd25a6779ca7e0961
+  checksum: 8a44ed7e6f6c4cb1ebe8cf236ecda2fb119d84dcf0fbd77e707b2dfea1bbcfc4e366493a143513ce7f57203c75da9d4e20af6fe46de89749366351046be7577c
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.5.4#~builtin<compat/typescript>":
-  version: 4.5.4
-  resolution: "typescript@patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=bcec9a"
+"typescript@patch:typescript@4.6.2#~builtin<compat/typescript>":
+  version: 4.6.2
+  resolution: "typescript@patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=5d3a66"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: eda87927f9cfb94aca9b5e47842daf37347ad3073133e17f556fbb6c18f3493c5b551eedab0f4b26774235ddb7acbe0087250d5285f72ce6819a0891dd5a74ed
+  checksum: 40b493a71747fb89fa70df104e2c4a5e284b43750af5bea024090a5261cefa387f7a9372411b13030f7bf5555cee4275443d08805642ae5c74ef76740854a4c7
   languageName: node
   linkType: hard
 
