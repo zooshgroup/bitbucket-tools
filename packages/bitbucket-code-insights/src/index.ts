@@ -5,7 +5,7 @@ import { BitbucketReportBody } from "./types"
 
 async function uploadReportToBitbucket(externalId: string, body: BitbucketReportBody){
 
-  const bitbucketProxyAddress = 'http://localhost';
+  const bitbucketProxyAddress = 'localhost';
   const bitbucketProxyPort = 29418; 
 
   const url = `http://api.bitbucket.org/2.0/repositories/${process.env.BITBUCKET_REPO_FULL_NAME}/commit/${process.env.BITBUCKET_COMMIT}/reports/${externalId}`;
@@ -16,11 +16,8 @@ async function uploadReportToBitbucket(externalId: string, body: BitbucketReport
 
   const proxyAddress = isRunningInDockerContainer ? 'host.docker.internal' : bitbucketProxyAddress;
 
-  console.log("ProxyAddress:", proxyAddress);
-  console.log("isRunningInDockerContainer:", isRunningInDockerContainer);
-
   const response = await fetch(url, {
-    agent: new HttpProxyAgent(`${proxyAddress}:${bitbucketProxyPort}`),
+    agent: new HttpProxyAgent(`http://${proxyAddress}:${bitbucketProxyPort}`),
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
