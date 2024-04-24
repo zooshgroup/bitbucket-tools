@@ -1,7 +1,22 @@
+import { lookup } from 'dns';
 import fetch from 'node-fetch'
 import fs from 'fs';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { BitbucketReportBody } from "./types"
+
+async function lookupAddress(address: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    lookup(address, (err) => {
+      if (err) {
+        reject({
+          message: `Unable to resolve ${address}. 
+          You may need to add the "--add-host=host.docker.internal:host-gateway" option to your Bitbucket Pipeline configuration`,
+        });
+      }
+      resolve(address);
+    });
+  });
+}
 
 async function uploadReportToBitbucket(externalId: string, body: BitbucketReportBody){
 
@@ -12,9 +27,16 @@ async function uploadReportToBitbucket(externalId: string, body: BitbucketReport
 
   console.log('URL:', url);
 
+  let proxyAddress = bitbucketProxyAddress;
+
   const isRunningInDockerContainer = fs.readFileSync('/proc/self/cgroup', 'utf8').indexOf('docker') !== -1;
 
-  const proxyAddress = isRunningInDockerContainer ? 'host.docker.internal' : bitbucketProxyAddress;
+  if(isRunningInDockerContainer){
+    
+    proxyAddress = 'host.docker.internal';
+    await lookupAddress(proxyAddress);
+    
+  }
 
   const response = await fetch(url, {
     agent: new HttpProxyAgent(`http://${proxyAddress}:${bitbucketProxyPort}`),
