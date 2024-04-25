@@ -22,9 +22,9 @@ async function uploadReport() {
     const coverageResults = JSON.parse(await fs.readFile(reportPath, 'utf8'));
 
     const body = {
-      title: 'Coverage',
+      title: name,
       report_type: 'COVERAGE',
-      details: 'Coverage report for the build.',
+      details: `Coverage report for the ${name}.`,
       result: 'PASSED',
       data: [
         {
