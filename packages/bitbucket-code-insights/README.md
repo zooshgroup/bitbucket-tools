@@ -54,13 +54,7 @@ const body = {
   // Report body
 };
 
-uploadReportToBitbucket(externalId, body)
-  .then(() => {
-    console.log('Report uploaded successfully.');
-  })
-  .catch((error) => {
-    console.error('Error uploading report:', error);
-  });
+await uploadReportToBitbucket(externalId, body)
 ```
 
 ## Running within a Docker Container
