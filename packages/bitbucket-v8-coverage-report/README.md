@@ -39,10 +39,13 @@ npx bitbucket-v8-coverage-report -n reportName -p ./path
 
 ## Running within a Docker Container
 
-You can run the script inside a Docker container. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Below is an example of how to run the container:
+You can run the script inside a Docker container. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container. 
+
+Below is an example of how to run the container:
 
 ```bash
 docker run --rm \
+  --add-host=host.docker.internal:host-gateway \
   -e BITBUCKET_REPO_FULL_NAME=<repo_full_name> \
   -e BITBUCKET_COMMIT=<commit_hash> \
   <docker_image_name>
