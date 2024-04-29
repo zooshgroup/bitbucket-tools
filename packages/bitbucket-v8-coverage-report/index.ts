@@ -14,6 +14,7 @@ const args = commandLineArgs(optionDefinitions);
 async function uploadReport() {
   try {
     const { name, path: reportPath } = args;
+    const reportName = `${name}-coverage-report`;
 
     if (!name || !reportPath) {
       throw new Error('Bitbucket v8 Coverage Report - Usage: uploadReport -n <report-name> -p <report-path>');
@@ -22,9 +23,9 @@ async function uploadReport() {
     const coverageResults = JSON.parse(await fs.readFile(reportPath, 'utf8'));
 
     const body = {
-      title: name,
+      title: reportName,
       report_type: 'COVERAGE',
-      details: `Coverage report for the ${name}.`,
+      details: `Coverage report for ${name}.`,
       result: 'PASSED',
       data: [
         {
