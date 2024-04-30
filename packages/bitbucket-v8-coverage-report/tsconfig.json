@@ -5,8 +5,12 @@
       "outDir": "./dist",
       "strict": true,
       "esModuleInterop": true,
-      "newLine": "lf"
+      "newLine": "lf",
+      "baseUrl": ".",
+      "paths": {
+        "utils/*": ["../../utils/*"]
+      }
     },
-    "include": ["index.ts"],
+    "include": ["index.ts", "../utils/*"],
     "exclude": ["node_modules", "dist"]
   }

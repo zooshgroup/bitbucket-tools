@@ -3,6 +3,9 @@ import fetch from 'node-fetch'
 import fs from 'fs';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { BitbucketReportBody } from "./types"
+import { createLogger } from 'utils/logger';
+
+const log = createLogger('Bitbucket Code Insights')
 
 async function lookupAddress(address: string): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -25,7 +28,7 @@ async function uploadReportToBitbucket(externalId: string, body: BitbucketReport
 
   const url = `http://api.bitbucket.org/2.0/repositories/${process.env.BITBUCKET_REPO_FULL_NAME}/commit/${process.env.BITBUCKET_COMMIT}/reports/${externalId}`;
 
-  console.log('URL:', url);
+  log(url, 'URL:');
 
   let proxyAddress = bitbucketProxyAddress;
 
@@ -48,7 +51,7 @@ async function uploadReportToBitbucket(externalId: string, body: BitbucketReport
     body: JSON.stringify(body),
   });
 
-  console.log(await response.text());
+  log(await response.text());
 }
 
 export default uploadReportToBitbucket;

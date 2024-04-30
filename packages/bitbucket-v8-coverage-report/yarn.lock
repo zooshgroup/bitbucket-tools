@@ -21,13 +21,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zooshdigital/bitbucket-code-insights@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "@zooshdigital/bitbucket-code-insights@npm:1.0.6"
+"@zooshdigital/bitbucket-code-insights@npm:1.0.14":
+  version: 1.0.14
+  resolution: "@zooshdigital/bitbucket-code-insights@npm:1.0.14"
   dependencies:
     http-proxy-agent: 7.0.2
     node-fetch: 2.7.0
-  checksum: f00aaf972c7708141c6be91c451a76dc86ecd32a8b6d66359500552479af3e059547c38eb57b675dec49ba88756695153d28955f650bdab8e7eeb1801e9e9717
+  checksum: e50042fb0ffe88c71e07035f6ae28cb480e1cc21f3c5d7dc3d1d6ad1fb02a3e9c77d9343ff316ff76bd117f692796030919b4109ff5d456f912cd6d38e2e9846
   languageName: node
   linkType: hard
 
@@ -37,10 +37,10 @@ __metadata:
   dependencies:
     "@types/command-line-args": 5.2.3
     "@types/node": 20.11.30
-    "@zooshdigital/bitbucket-code-insights": ^1.0.6
+    "@zooshdigital/bitbucket-code-insights": 1.0.14
     command-line-args: 5.2.1
     cross-env: 7.0.3
-    typescript: 4.5.4
+    typescript: 4.6.2
   bin:
     bitbucket-v8-coverage-report: dist/index.js
   languageName: unknown
@@ -193,23 +193,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.5.4":
-  version: 4.5.4
-  resolution: "typescript@npm:4.5.4"
+"typescript@npm:4.6.2":
+  version: 4.6.2
+  resolution: "typescript@npm:4.6.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 59f3243f9cd6fe3161e6150ff6bf795fc843b4234a655dbd938a310515e0d61afd1ac942799e7415e4334255e41c2c49b7dd5d9fd38a17acd25a6779ca7e0961
+  checksum: 8a44ed7e6f6c4cb1ebe8cf236ecda2fb119d84dcf0fbd77e707b2dfea1bbcfc4e366493a143513ce7f57203c75da9d4e20af6fe46de89749366351046be7577c
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.5.4#~builtin<compat/typescript>":
-  version: 4.5.4
-  resolution: "typescript@patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=bcec9a"
+"typescript@patch:typescript@4.6.2#~builtin<compat/typescript>":
+  version: 4.6.2
+  resolution: "typescript@patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=5d3a66"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: eda87927f9cfb94aca9b5e47842daf37347ad3073133e17f556fbb6c18f3493c5b551eedab0f4b26774235ddb7acbe0087250d5285f72ce6819a0891dd5a74ed
+  checksum: 40b493a71747fb89fa70df104e2c4a5e284b43750af5bea024090a5261cefa387f7a9372411b13030f7bf5555cee4275443d08805642ae5c74ef76740854a4c7
   languageName: node
   linkType: hard
 
