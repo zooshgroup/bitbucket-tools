@@ -1,6 +1,6 @@
-# Zoosh Bitbucket Coverage Report Uploader
+# Zoosh Bitbucket Code Insights
 
-This script, uploadReportToBitbucket, is responsible for uploading coverage reports to Bitbucket repositories. It constructs the URL for the Bitbucket API based on the provided external ID (which represents the name of the report), and then sends a PUT request to update the report. The report body is formatted as JSON and includes details such as title, report type, details, result, and data. Upon successful upload, the script logs the response from Bitbucket.
+The Zoosh Bitbucket Code Insights is a versatile tool designed for uploading reports to Bitbucket repositories. It constructs the URL for the Bitbucket API based on the provided external ID (which represents the name of the report), and then sends a PUT request to update the report. The report body is formatted as JSON and includes details such as title, report type, details, result, and data. Upon successful upload, the script logs the response from Bitbucket.
 
 ## Installation
 
@@ -20,7 +20,7 @@ yarn add @zooshdigital/bitbucket-code-insights
 
 ### uploadReportToBitbucket Function
 
-The uploadReport function provided by Zoosh Bitbucket Tools enables you to upload coverage reports to Bitbucket pipelines. Below is an example of how to use this function.
+The project offers a function named `uploadReportToBitbucket`, allowing you to upload the provided reports to Bitbucket using the Bitbucket API.
 
 ### Report Body Format
 
@@ -42,9 +42,13 @@ interface BitbucketReportBody {
 }
 ```
 
-Where data is an array of objects, each containing the title, type, and value fields.
+Where data is an array of objects, each containing the title, type, and value fields. 
+
+More details about this format can be found in the Bitbucket API official documentation [here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-put).
 
 ## Example
+
+To use the `uploadReportToBitbucket` function in your project, you can access it like this:
 
 ```typescript
 import uploadReportToBitbucket from '@zooshdigital/bitbucket-code-insights';
@@ -59,7 +63,7 @@ await uploadReportToBitbucket(externalId, body)
 
 ## Running within a Docker Container
 
-You can run the script inside a Docker container. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container. 
+You have the option to run the script inside a Docker container if needed. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container. 
 
 Below is an example of how to run the container:
 

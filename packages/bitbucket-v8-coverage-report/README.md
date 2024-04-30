@@ -1,6 +1,6 @@
 # Zoosh bitbucket-v8-coverage-report
 
-Zoosh bitbucket-v8-coverage-report is a boilerplate package designed to facilitate the upload of reports to Bitbucket pipelines. This package provides functions to automate the process of uploading reports generated during build processes.
+Zoosh `bitbucket-v8-coverage-report` is a boilerplate package designed to facilitate the upload of reports to Bitbucket. This package provides functions to automate the process of uploading reports generated during build processes.
 
 ## Installation
 
@@ -24,22 +24,20 @@ The uploadReport function provided by Zoosh bitbucket-v8-coverage-report enables
 
 This package includes a command-line utility named `bitbucket-v8-coverage-report`. This allows you to execute the tool using `npx` from your terminal.
 
-```bash
-bitbucket-v8-coverage-report
-```
-
 This takes the following arguments:
 
 - -n (required): The name of the report.
-- -p (required): The path to the report file.
+- -p (required): The path to the V8 coverage report file.
 
 ```bash
 npx bitbucket-v8-coverage-report -n reportName -p ./path
 ```
 
+Ensure that the specified path leads to a V8 coverage report that can be passed to the Bitbucket API.
+
 ## Running within a Docker Container
 
-You can run the script inside a Docker container. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container. 
+You have the option to run the script inside a Docker container if needed. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container. 
 
 Below is an example of how to run the container:
 
