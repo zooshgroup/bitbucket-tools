@@ -5,7 +5,7 @@
     "packageManager": "yarn@3.6.3",
     "description": "zoosh-boilerplate to upload a report to Bitbucket",
     "author": {
-        "name": "Zoosh Group"
+        "name": "Zoosh Digital"
     },
     "engines": {
         "node": "18.x || 20.x"
