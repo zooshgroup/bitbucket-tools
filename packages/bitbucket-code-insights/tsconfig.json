@@ -9,7 +9,7 @@
       "declaration": true,
       "baseUrl": "src",
       "paths": {
-        "utils/*": ["../../../utils/*"]
+        "utils/*": ["utils/*"]
       }
   },
   "include": ["./src/**/*"],

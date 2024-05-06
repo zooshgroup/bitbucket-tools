@@ -8,7 +8,7 @@
       "newLine": "lf",
       "baseUrl": ".",
       "paths": {
-        "utils/*": ["../../utils/*"]
+        "utils/*": ["utils/*"]
       }
     },
     "include": ["index.ts", "../utils/*"],
