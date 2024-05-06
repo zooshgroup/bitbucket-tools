@@ -22,16 +22,16 @@ yarn add @zooshdigital/bitbucket-v8-coverage-report
 
 The uploadReport function provided by Zoosh bitbucket-v8-coverage-report enables you to upload coverage reports to Bitbucket pipelines. 
 
-This package includes a command-line utility named `bitbucket-v8-coverage-report`. This allows you to execute the tool using `npx` from your terminal.
+To utilize the functionality provided by this package, simply run it using npx. Below is an example of how to execute the command-line utility `@zooshdigital/bitbucket-v8-coverage-report` with **npx** directly from your terminal:
+
+```bash
+npx  @zooshdigital/bitbucket-v8-coverage-report -n reportName -p ./path-to-the-v8-coverage-report
+```
 
 This takes the following arguments:
 
 - -n (required): The name of the report.
 - -p (required): The path to the V8 coverage report file.
-
-```bash
-npx bitbucket-v8-coverage-report -n reportName -p ./path
-```
 
 Ensure that the specified path leads to a V8 coverage report that can be passed to the Bitbucket API.
 
