@@ -3,7 +3,7 @@ import fetch from 'node-fetch'
 import fs from 'fs';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { BitbucketReportBody } from "./types"
-import { createLogger } from './utils/logger';
+import { createLogger } from 'utils/logger';
 
 const log = createLogger('Bitbucket Code Insights')
 
