@@ -24,16 +24,40 @@ The uploadReport function provided by Zoosh bitbucket-v8-coverage-report enables
 
 To utilize the functionality provided by this package, simply run it using npx. Below is an example of how to execute the command-line utility `@zooshdigital/bitbucket-v8-coverage-report` with **npx** directly from your terminal:
 
+#### Using npx:
+
 ```bash
 npx  @zooshdigital/bitbucket-v8-coverage-report -n reportName -p ./path-to-the-v8-coverage-report
 ```
 
-This takes the following arguments:
+#### Using yarn:
+
+```bash
+yarn bitbucket-v8-coverage-report -n reportName -p ./path-to-the-v8-coverage-report
+```
+
+If you prefer using yarn, ensure that the @zooshdigital/bitbucket-v8-coverage-report is listed in the dependencies of the current workspace if you're using multiple workspaces.
+
+It takes the following arguments:
 
 - -n (required): The name of the report.
 - -p (required): The path to the V8 coverage report file.
 
 Ensure that the specified path leads to a V8 coverage report that can be passed to the Bitbucket API.
+
+### Configuring Jest for Code Coverage Analysis
+
+When configuring Jest for code coverage analysis, you may need to specify which files should be included in the coverage report. The `collectCoverageFrom` property in Jest configuration allows you to specify these files. Here's an example of a possible configuration:
+
+```javascript
+collectCoverageFrom: [
+  './**/*.{js,ts}',
+  '!**/node_modules/**',
+  '!./.eslintrc.js',
+  '!./jest.config.ts',
+  '!./coverage/**',
+],
+```
 
 ## Running within a Docker Container
 
