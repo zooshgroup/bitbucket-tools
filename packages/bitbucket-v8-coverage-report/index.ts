@@ -12,7 +12,7 @@ const optionDefinitions = [
 
 const args = commandLineArgs(optionDefinitions);
 
-const log = createLogger('Zoosh Bitbucket v8 Coverage Report')
+const logger = createLogger('Zoosh Bitbucket v8 Coverage Report');
 
 async function uploadReport() {
   try {
@@ -54,9 +54,9 @@ async function uploadReport() {
     };
 
     await uploadReportToBitbucket(name, body);
-    log('Report uploaded successfully', name);
+    logger.log('Report uploaded successfully', name);
   } catch (error) {
-    log(`Error uploading report: ${error}`);
+    logger.log(`Error uploading report: ${error}`);
     process.exit(1);
   }
 }
