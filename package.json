@@ -15,9 +15,5 @@
         "url": "git@github.com:zooshgroup/bitbucket-tools.git"
     },
     "license": "GPL-3.0",
-    "homepage": "https://github.com/zooshgroup/bitbucket-tools",
-    "devDependencies": {
-        "prettier": "3.2.5",
-        "ts-node": "10.9.2"
-    }
+    "homepage": "https://github.com/zooshgroup/bitbucket-tools"
 }
