@@ -42,7 +42,7 @@ interface BitbucketReportBody {
 }
 ```
 
-Where data is an array of objects, each containing the title, type, and value fields. 
+Where data is an array of objects, each containing the title, type, and value fields.
 
 More details about this format can be found in the Bitbucket API official documentation [here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-put).
 
@@ -63,7 +63,7 @@ await uploadReportToBitbucket(externalId, body)
 
 ## Running within a Docker Container
 
-You have the option to run the script inside a Docker container if needed. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container. 
+You have the option to run the script inside a Docker container if needed. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container.
 
 Below is an example of how to run the container:
 
@@ -77,11 +77,11 @@ docker run --rm \
 
 Replace <repo_full_name> with the full name of your Bitbucket repository, <commit_hash> with the commit hash you want to analyze, and <docker_image_name> with the name of the Docker image you built.
 
-## Authentication 
-Your requests will automatically be routed through a proxy server running alongside every pipeline on 'localhost:29418'. This proxy server adds a valid Auth-Header to your requests, eliminating the need for additional authentication configurations.
- 
-See more in the official Bitbucket documentation [here](https://support.atlassian.com/bitbucket-cloud/docs/code-insights/).
+## Authentication
 
+Your requests will automatically be routed through a proxy server running alongside every pipeline on 'localhost:29418'. This proxy server adds a valid Auth-Header to your requests, eliminating the need for additional authentication configurations.
+
+See more in the official Bitbucket documentation [here](https://support.atlassian.com/bitbucket-cloud/docs/code-insights/).
 
 ## License
 
