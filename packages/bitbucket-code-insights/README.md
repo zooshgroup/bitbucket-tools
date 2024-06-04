@@ -1,6 +1,6 @@
 # Zoosh Bitbucket Code Insights
 
-The Zoosh Bitbucket Code Insights is a versatile tool designed for uploading reports to Bitbucket repositories. It constructs the URL for the Bitbucket API based on the provided external ID (which represents the name of the report), and then sends a PUT request to update the report. The report body is formatted as JSON and includes details such as title, report type, details, result, and data. Upon successful upload, the script logs the response from Bitbucket.
+The Zoosh Bitbucket Code Insights is designed for uploading reports to Bitbucket Pull Requests. It constructs the URL for the Bitbucket API based on the provided external ID (which represents the name of the report), and then sends a PUT request to update the report. The report body is formatted as JSON and includes details such as title, report type, details, result, and data. Upon successful upload, the script logs the response from Bitbucket.
 
 ## Installation
 
