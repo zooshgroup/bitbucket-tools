@@ -91,13 +91,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zooshdigital/bitbucket-code-insights@npm:1.0.18":
-  version: 1.0.18
-  resolution: "@zooshdigital/bitbucket-code-insights@npm:1.0.18"
+"@zooshdigital/bitbucket-code-insights@npm:1.0.20":
+  version: 1.0.20
+  resolution: "@zooshdigital/bitbucket-code-insights@npm:1.0.20"
   dependencies:
     http-proxy-agent: 7.0.2
     node-fetch: 2.7.0
-  checksum: 6500f9d8192df5eef45196090fb36d22f77ff1c6197b7ec4f2e8d8c8b01c149bc93251cd99856c609f041b30df8e1e7df9e6419cb67eb0aaccdf737219379cbd
+  checksum: c90dd8e0af199abecc749f0d283a0f85705d72338e0cb72d93aa0ff71688b821990918b4521e79927f8421900c22328a8e3621c8e41ebb382e46268c275d124c
   languageName: node
   linkType: hard
 
@@ -107,7 +107,7 @@ __metadata:
   dependencies:
     "@types/command-line-args": 5.2.3
     "@types/node": 20.11.30
-    "@zooshdigital/bitbucket-code-insights": 1.0.18
+    "@zooshdigital/bitbucket-code-insights": 1.0.20
     command-line-args: 5.2.1
     cross-env: 7.0.3
     tsc-alias: 1.8.2
