@@ -1,0 +1,45 @@
+{
+    "name": "@zooshdigital/bitbucket-code-insights",
+    "version": "1.0.20",
+    "packageManager": "yarn@3.6.3",
+    "description": "Function to upload reports to Bitbucket",
+    "author": {
+        "name": "Zoosh Digital"
+    },
+    "keywords": [
+        "Bitbucket",
+        "upload",
+        "coverage",
+        "report",
+        "node-fetch",
+        "http-proxy-agent",
+        "typescript"
+    ],
+    "engines": {
+        "node": "18.x || 20.x"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "yarn tsc && yarn tsc-alias -p tsconfig.json"
+    },
+    "files": [
+        "dist"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/zooshgroup/bitbucket-tools.git"
+    },
+    "license": "GPL-3.0",
+    "homepage": "https://github.com/zooshgroup/bitbucket-tools",
+    "dependencies": {
+        "http-proxy-agent": "7.0.2",
+        "node-fetch": "2.7.0"
+    },
+    "devDependencies": {
+        "@types/node": "20.11.30",
+        "@types/node-fetch": "^2.6.11",
+        "tsc-alias": "1.8.2",
+        "typescript": "4.6.2"
+    }
+}
