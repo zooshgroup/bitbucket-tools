@@ -23,6 +23,20 @@ async function lookupAddress(address: string): Promise<string> {
   });
 }
 
+function isRunningInDocker(): boolean {
+  try {
+    const cgroupContent = fs.readFileSync('/proc/self/cgroup', 'utf8');
+    const isDocker = cgroupContent.includes('docker') || fs.existsSync('/.dockerenv') || fs.existsSync('/.dockerinit');
+    return isDocker;
+  } catch (err) {
+    logger.error(
+      'Failed to determine if running in Docker. Proceeding with localhost as the default proxy address.',
+      (err as Error).message
+    );
+    return false;
+  }
+}
+
 async function uploadReportToBitbucket(externalId: string, body: BitbucketReportBody) {
   const bitbucketProxyAddress = 'localhost';
   const bitbucketProxyPort = 29418;
@@ -41,14 +55,8 @@ async function uploadReportToBitbucket(externalId: string, body: BitbucketReport
   logger.log(`Constructed API URL: ${url}`);
 
   let proxyAddress = bitbucketProxyAddress;
-  let isRunningInDockerContainer = false;
-
-  try {
-    isRunningInDockerContainer = fs.readFileSync('/proc/self/cgroup', 'utf8').indexOf('docker') !== -1;
-    logger.log(`Running in Docker container: ${isRunningInDockerContainer}`);
-  } catch (err) {
-    logger.warn(`Could not determine if running inside Docker. Proceeding with default proxy address.`);
-  }
+  const isRunningInDockerContainer = isRunningInDocker();
+  logger.log(`Running in Docker container: ${isRunningInDockerContainer}`);
 
   if (isRunningInDockerContainer) {
     proxyAddress = 'host.docker.internal';
@@ -56,7 +64,7 @@ async function uploadReportToBitbucket(externalId: string, body: BitbucketReport
       await lookupAddress(proxyAddress);
     } catch (err) {
       logger.error(`Failed to resolve Docker proxy address: ${proxyAddress}`);
-      logger.error((err as Error ).message);
+      logger.error((err as Error).message);
       process.exit(1);
     }
   }
@@ -89,7 +97,7 @@ async function uploadReportToBitbucket(externalId: string, body: BitbucketReport
       1. Proxy server is not running or unreachable at ${proxyAddress}:${bitbucketProxyPort}.
       2. Incorrect API URL: ${url}.
       3. Network issues or pipeline misconfiguration.`);
-    logger.error((err as Error ).message);
+    logger.error((err as Error).message);
     process.exit(1);
   }
 }
