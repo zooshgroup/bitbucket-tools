@@ -75,7 +75,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-fetch@npm:^2.6.11":
+"@types/node-fetch@npm:2.6.11":
   version: 2.6.11
   resolution: "@types/node-fetch@npm:2.6.11"
   dependencies:
@@ -108,7 +108,7 @@ __metadata:
   resolution: "@zooshdigital/bitbucket-code-insights@workspace:."
   dependencies:
     "@types/node": 20.11.30
-    "@types/node-fetch": ^2.6.11
+    "@types/node-fetch": 2.6.11
     http-proxy-agent: 7.0.2
     node-fetch: 2.7.0
     tsc-alias: 1.8.2

@@ -1,6 +1,6 @@
 {
     "name": "@zooshdigital/bitbucket-code-insights",
-    "version": "1.0.20",
+    "version": "1.0.21",
     "packageManager": "yarn@3.6.3",
     "description": "Function to upload reports to Bitbucket",
     "author": {
@@ -38,7 +38,7 @@
     },
     "devDependencies": {
         "@types/node": "20.11.30",
-        "@types/node-fetch": "^2.6.11",
+        "@types/node-fetch": "2.6.11",
         "tsc-alias": "1.8.2",
         "typescript": "4.6.2"
     }
