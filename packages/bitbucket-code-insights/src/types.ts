@@ -1,13 +1,20 @@
 export interface BitbucketReportData {
-    title: string;
-    type: string;
-    value: number;
-  }
-  
+  title: string;
+  type:
+    | "BOOLEAN"
+    | "DATE"
+    | "DURATION"
+    | "LINK"
+    | "NUMBER"
+    | "PERCENTAGE"
+    | "TEXT";
+  value: number;
+}
+
 export interface BitbucketReportBody {
-    title: string;
-    report_type: string;
-    details: string;
-    result: string;
-    data: BitbucketReportData[];
-  }
+  title: string;
+  report_type: "SECURITY" | "COVERAGE" | "TEST" | "BUG";
+  details: string;
+  result: "PASSED" | "FAILED" | "PENDING";
+  data: BitbucketReportData[];
+}
