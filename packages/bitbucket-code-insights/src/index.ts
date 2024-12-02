@@ -25,15 +25,17 @@ async function lookupAddress(address: string): Promise<string> {
 
 function isRunningInDocker(): boolean {
   try {
-    const cgroupContent = fs.readFileSync('/proc/self/cgroup', 'utf8');
-    const isDocker = cgroupContent.includes('docker') || fs.existsSync('/.dockerenv') || fs.existsSync('/.dockerinit');
-    return isDocker;
+      const cgroupContent = fs.existsSync('/proc/1/cgroup') ? fs.readFileSync('/proc/1/cgroup', 'utf8') : '';
+      const isCgroupDocker = cgroupContent.includes('docker');
+      const isDockerenvPresent = fs.existsSync('/.dockerenv');
+      const isDockerinitPresent = fs.existsSync('/.dockerinit');
+      const mountinfoContent = fs.existsSync('/proc/1/mountinfo') ? fs.readFileSync('/proc/1/mountinfo', 'utf8') : '';
+      const isMountinfoDocker = mountinfoContent.includes('/var/lib/docker/');
+      const isDocker = isCgroupDocker || isDockerenvPresent || isDockerinitPresent || isMountinfoDocker;
+      return isDocker;
   } catch (err) {
-    logger.error(
-      'Failed to determine if running in Docker. Proceeding with localhost as the default proxy address.',
-      (err as Error).message
-    );
-    return false;
+      logger.error('Failed to determine if running in Docker. Proceeding with localhost as the default proxy address.', (err as Error).message);
+      return false;
   }
 }
 
