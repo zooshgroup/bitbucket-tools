@@ -11,7 +11,7 @@ interface CoverageResult {
   lines: number;
   functions: number;
   branches: number;
-};
+}
 
 interface MinCoverage {
   statements?: number;
@@ -23,10 +23,10 @@ interface MinCoverage {
 const optionDefinitions = [
   { name: 'name', alias: 'n', type: String },
   { name: 'path', alias: 'p', type: String },
-  { name: 'min-lines-coverage', alias: 'mlc', type: Number },
-  { name: 'min-statements-coverage', alias: 'msc', type: Number },
-  { name: 'min-functions-coverage', alias: 'mfc', type: Number },
-  { name: 'min-branches-coverage', alias: 'mbc', type: Number },
+  { name: 'min-lines-coverage', alias: 'l', type: Number },
+  { name: 'min-statements-coverage', alias: 's', type: Number },
+  { name: 'min-functions-coverage', alias: 'f', type: Number },
+  { name: 'min-branches-coverage', alias: 'b', type: Number },
 ];
 
 const args = commandLineArgs(optionDefinitions);
@@ -62,9 +62,7 @@ async function uploadReport() {
     } = args;
 
     if (!name || !reportPath) {
-      throw new Error(
-        'Bitbucket v8 Coverage Report - Usage: uploadReport -n <report-name> -p <report-path>'
-      );
+      throw new Error('Bitbucket v8 Coverage Report - Usage: uploadReport -n <report-name> -p <report-path>');
     }
 
     const coverageResults = JSON.parse(await fs.readFile(reportPath, 'utf8'));
