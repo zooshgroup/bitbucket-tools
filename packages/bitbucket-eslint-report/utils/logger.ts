@@ -11,6 +11,6 @@ export function createLogger(packageName: string) {
     error: (message: string, additionalInfo?: string) => {
       const errorMessage = formatMessage(message, additionalInfo);
       throw new Error(errorMessage);
-    }
+    },
   };
 }
