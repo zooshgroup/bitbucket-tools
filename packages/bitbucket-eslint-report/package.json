@@ -1,28 +1,29 @@
 {
-  "name": "@zooshdigital/bitbucket-code-insights",
+  "name": "@zooshdigital/bitbucket-eslint-report",
   "version": "1.0.27",
   "packageManager": "yarn@3.6.3",
-  "description": "Function to upload reports to Bitbucket",
-  "author": {
-    "name": "Zoosh Digital"
-  },
+  "description": "Command-line tool to upload eslint reports to Bitbucket",
   "keywords": [
     "Bitbucket",
     "upload",
-    "coverage",
+    "eslint",
     "report",
-    "node-fetch",
-    "http-proxy-agent",
+    "command-line",
+    "@zooshdigital/bitbucket-code-insights",
     "typescript"
   ],
+  "author": {
+    "name": "Zoosh Digital"
+  },
   "engines": {
     "node": "18.x || 20.x || 22.x"
   },
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "yarn tsc && yarn tsc-alias -p tsconfig.json"
+    "build": "yarn tsc && yarn tsc-alias -p tsconfig.json",
+    "start": "node dist/index.js"
   },
+  "bin": "dist/index.js",
   "files": [
     "dist"
   ],
@@ -33,12 +34,13 @@
   "license": "GPL-3.0",
   "homepage": "https://github.com/zooshgroup/bitbucket-tools",
   "dependencies": {
-    "http-proxy-agent": "7.0.2",
-    "node-fetch": "2.7.0"
+    "@zooshdigital/bitbucket-code-insights": "1.0.27",
+    "command-line-args": "5.2.1"
   },
   "devDependencies": {
+    "@types/command-line-args": "5.2.3",
     "@types/node": "20.11.30",
-    "@types/node-fetch": "2.6.11",
+    "cross-env": "7.0.3",
     "tsc-alias": "1.8.2",
     "typescript": "4.6.2"
   }
