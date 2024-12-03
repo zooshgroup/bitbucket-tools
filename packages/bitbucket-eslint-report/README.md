@@ -61,7 +61,7 @@ In this case, `--quiet` removes any warnings, so that only errors are captured (
 
 ## Running within a Docker Container
 
-You have the option to run the script inside a Docker container if needed. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container.
+You have the option to run the script inside a Docker container if needed. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME**, **BITBUCKET_COMMIT** and **BITBUCKET_CLONE_DIR**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container.
 
 Below is an example of how to run the container:
 
@@ -70,6 +70,7 @@ docker run --rm \
   --add-host=host.docker.internal:host-gateway \
   -e BITBUCKET_REPO_FULL_NAME=<repo_full_name> \
   -e BITBUCKET_COMMIT=<commit_hash> \
+  -e BITBUCKET_CLONE_DIR=<absolute path of repository root> \
   <docker_image_name>
 ```
 

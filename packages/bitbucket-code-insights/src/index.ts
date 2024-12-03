@@ -4,7 +4,7 @@ import fs from 'fs';
 import { HttpProxyAgent } from 'http-proxy-agent';
 
 import { createLogger } from 'utils/logger';
-import { BitbucketAnnotation, BitbucketReportBody } from './types';
+import { BitbucketAnnotation, BitbucketBuildBody, BitbucketReportBody } from './types';
 
 const logger = createLogger('Bitbucket Code Insights');
 
@@ -130,5 +130,18 @@ export async function uploadReportToBitbucket(externalId: string, body: Bitbucke
   const response = await callApi(url, 'PUT', body);
   if (response.ok) {
     logger.log(`Report uploaded successfully.`);
+  }
+}
+
+export async function createBuildOnBitbucket(body: BitbucketBuildBody) {
+  assertEnvVars();
+  const repoFullName = process.env.BITBUCKET_REPO_FULL_NAME;
+  const commitHash = process.env.BITBUCKET_COMMIT;
+
+  const url = `http://api.bitbucket.org/2.0/repositories/${repoFullName}/commit/${commitHash}/statuses/build/`;
+
+  const response = await callApi(url, 'POST', body);
+  if (response.ok) {
+    logger.log(`Build created successfully.`);
   }
 }
