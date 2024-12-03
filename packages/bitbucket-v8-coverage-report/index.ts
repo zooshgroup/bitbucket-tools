@@ -6,19 +6,11 @@ import uploadReportToBitbucket from '@zooshdigital/bitbucket-code-insights';
 import { createLogger } from 'utils/logger';
 import { BitbucketReportBody } from '@zooshdigital/bitbucket-code-insights/dist/types';
 
-interface CoverageResult {
-  statements: number;
-  lines: number;
-  functions: number;
-  branches: number;
-}
+type CoverageType = 'statements' | 'lines' | 'functions' | 'branches';
 
-interface MinCoverage {
-  statements?: number;
-  lines?: number;
-  functions?: number;
-  branches?: number;
-}
+type CoverageResult = Record<CoverageType, number>;
+
+type MinCoverage = Record<CoverageType, number | undefined>;
 
 const optionDefinitions = [
   { name: 'name', alias: 'n', type: String },
@@ -34,19 +26,13 @@ const args = commandLineArgs(optionDefinitions);
 const logger = createLogger('Zoosh Bitbucket v8 Coverage Report');
 
 function getReportResult(coverageResult: CoverageResult, minCoverage: MinCoverage): 'PASSED' | 'FAILED' {
-  if (minCoverage.lines !== undefined && coverageResult.lines < minCoverage.lines) {
+  const failedThreshold = Object.keys(minCoverage).find((key) => {
+    const keyType = key as CoverageType;
+    return minCoverage[keyType] !== undefined && coverageResult[keyType] < minCoverage[keyType];
+  });
+  if (failedThreshold) {
     return 'FAILED';
   }
-  if (minCoverage.statements !== undefined && coverageResult.statements < minCoverage.statements) {
-    return 'FAILED';
-  }
-  if (minCoverage.functions !== undefined && coverageResult.functions < minCoverage.functions) {
-    return 'FAILED';
-  }
-  if (minCoverage.branches !== undefined && coverageResult.branches < minCoverage.branches) {
-    return 'FAILED';
-  }
-
   return 'PASSED';
 }
 
