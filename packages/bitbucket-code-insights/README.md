@@ -22,29 +22,7 @@ yarn add @zooshdigital/bitbucket-code-insights
 
 The project offers a function named `uploadReportToBitbucket`, allowing you to upload the provided reports to Bitbucket using the Bitbucket API.
 
-### Report Body Format
-
-The `uploadReportToBitbucket` function accepts a report body in the following format:
-
-```typescript
-interface BitbucketReportData {
-  title: string;
-  type: string;
-  value: number;
-}
-
-interface BitbucketReportBody {
-  title: string;
-  report_type: string;
-  details: string;
-  result: string;
-  data: BitbucketReportData[];
-}
-```
-
-Where data is an array of objects, each containing the title, type, and value fields.
-
-More details about this format can be found in the Bitbucket API official documentation [here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-put).
+More details can be found in the Bitbucket API documentation [here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-put).
 
 ## Example
 

@@ -2,21 +2,50 @@
 
 import fs from 'fs/promises';
 import commandLineArgs from 'command-line-args';
-import uploadReportToBitbucket from "@zooshdigital/bitbucket-code-insights";
+import uploadReportToBitbucket from '@zooshdigital/bitbucket-code-insights';
 import { createLogger } from 'utils/logger';
+import { BitbucketReportBody } from '@zooshdigital/bitbucket-code-insights/dist/types';
+
+type CoverageType = 'statements' | 'lines' | 'functions' | 'branches';
+
+type CoverageResult = Record<CoverageType, number>;
+
+type MinCoverage = Record<CoverageType, number | undefined>;
 
 const optionDefinitions = [
   { name: 'name', alias: 'n', type: String },
   { name: 'path', alias: 'p', type: String },
+  { name: 'min-lines-coverage', alias: 'l', type: Number },
+  { name: 'min-statements-coverage', alias: 's', type: Number },
+  { name: 'min-functions-coverage', alias: 'f', type: Number },
+  { name: 'min-branches-coverage', alias: 'b', type: Number },
 ];
 
 const args = commandLineArgs(optionDefinitions);
 
 const logger = createLogger('Zoosh Bitbucket v8 Coverage Report');
 
+function getReportResult(coverageResult: CoverageResult, minCoverage: MinCoverage): 'PASSED' | 'FAILED' {
+  const failedThreshold = Object.keys(minCoverage).find((key) => {
+    const keyType = key as CoverageType;
+    return minCoverage[keyType] !== undefined && coverageResult[keyType] < minCoverage[keyType];
+  });
+  if (failedThreshold) {
+    return 'FAILED';
+  }
+  return 'PASSED';
+}
+
 async function uploadReport() {
   try {
-    const { name, path: reportPath } = args;
+    const {
+      name,
+      path: reportPath,
+      'min-lines-coverage': minLinesCoverage,
+      'min-statements-coverage': minStatementsCoverage,
+      'min-functions-coverage': minFunctionsCoverage,
+      'min-branches-coverage': minBranchesCoverage,
+    } = args;
 
     if (!name || !reportPath) {
       throw new Error('Bitbucket v8 Coverage Report - Usage: uploadReport -n <report-name> -p <report-path>');
@@ -24,31 +53,45 @@ async function uploadReport() {
 
     const coverageResults = JSON.parse(await fs.readFile(reportPath, 'utf8'));
 
-    const body = {
+    const coverageResultPercentage = {
+      statements: coverageResults.total.statements.pct,
+      lines: coverageResults.total.lines.pct,
+      functions: coverageResults.total.functions.pct,
+      branches: coverageResults.total.branches.pct,
+    };
+
+    const reportResult = getReportResult(coverageResultPercentage, {
+      statements: minStatementsCoverage,
+      lines: minLinesCoverage,
+      functions: minFunctionsCoverage,
+      branches: minBranchesCoverage,
+    });
+
+    const body: BitbucketReportBody = {
       title: name,
       report_type: 'COVERAGE',
       details: `Coverage report for ${name}.`,
-      result: 'PASSED',
+      result: reportResult,
       data: [
         {
           title: 'Lines',
           type: 'PERCENTAGE',
-          value: coverageResults.total.lines.pct,
+          value: coverageResultPercentage.lines,
         },
         {
           title: 'Statements',
           type: 'PERCENTAGE',
-          value: coverageResults.total.statements.pct,
+          value: coverageResultPercentage.statements,
         },
         {
           title: 'Functions',
           type: 'PERCENTAGE',
-          value: coverageResults.total.functions.pct,
+          value: coverageResultPercentage.functions,
         },
         {
           title: 'Branches',
           type: 'PERCENTAGE',
-          value: coverageResults.total.branches.pct,
+          value: coverageResultPercentage.branches,
         },
       ],
     };
