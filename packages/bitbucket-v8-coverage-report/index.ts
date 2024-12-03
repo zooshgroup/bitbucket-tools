@@ -2,9 +2,10 @@
 
 import fs from 'fs/promises';
 import commandLineArgs from 'command-line-args';
-import uploadReportToBitbucket from '@zooshdigital/bitbucket-code-insights';
-import { createLogger } from 'utils/logger';
+import { uploadReportToBitbucket } from '@zooshdigital/bitbucket-code-insights';
 import { BitbucketReportBody } from '@zooshdigital/bitbucket-code-insights/dist/types';
+
+import { createLogger } from 'utils/logger';
 
 type CoverageType = 'statements' | 'lines' | 'functions' | 'branches';
 
@@ -26,9 +27,9 @@ const args = commandLineArgs(optionDefinitions);
 const logger = createLogger('Zoosh Bitbucket v8 Coverage Report');
 
 function getReportResult(coverageResult: CoverageResult, minCoverage: MinCoverage): 'PASSED' | 'FAILED' {
-  const failedThreshold = Object.keys(minCoverage).find((key) => {
-    const keyType = key as CoverageType;
-    return minCoverage[keyType] !== undefined && coverageResult[keyType] < minCoverage[keyType];
+  const failedThreshold = Object.keys(minCoverage).some((key) => {
+    const coverageType = key as CoverageType;
+    return coverageResult[coverageType] < (minCoverage[coverageType] ?? 0);
   });
   if (failedThreshold) {
     return 'FAILED';
@@ -48,7 +49,9 @@ async function uploadReport() {
     } = args;
 
     if (!name || !reportPath) {
-      throw new Error('Bitbucket v8 Coverage Report - Usage: uploadReport -n <report-name> -p <report-path>');
+      throw new Error(
+        'Bitbucket v8 Coverage Report - Usage: bitbucket-v8-coverage-report -n <report-name> -p <report-path>',
+      );
     }
 
     const coverageResults = JSON.parse(await fs.readFile(reportPath, 'utf8'));
