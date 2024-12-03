@@ -42,6 +42,10 @@ It takes the following arguments:
 
 - -n (required): The name of the report.
 - -p (required): The path to the V8 coverage report file.
+- -l (optional): Optional threshold for the line coverage value.
+- -s (optional): Optional threshold for the statements coverage value.
+- -f (optional): Optional threshold for the functions coverage value.
+- -b (optional): Optional threshold for the branches coverage value.
 
 Ensure that the specified path leads to a V8 coverage report that can be passed to the Bitbucket API.
 
