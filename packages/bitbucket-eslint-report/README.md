@@ -27,13 +27,13 @@ To utilize the functionality simply run it using npx. Below is an example of how
 #### Using npx
 
 ```bash
-npx  @zooshdigital/bitbucket-eslint-report -n reportName -p ./path-to-the-eslint-report
+npx  @zooshdigital/bitbucket-eslint-report -n reportName -p ./path-to-the-eslint-report.json
 ```
 
 #### Using yarn
 
 ```bash
-yarn bitbucket-eslint-report -n reportName -p ./path-to-the-eslint-report
+yarn bitbucket-eslint-report -n reportName -p ./path-to-the-eslint-report.json
 ```
 
 If you prefer using yarn, ensure that the @zooshdigital/bitbucket-eslint-report is listed in the dependencies of the current workspace if you're using multiple workspaces.
@@ -41,25 +41,23 @@ If you prefer using yarn, ensure that the @zooshdigital/bitbucket-eslint-report 
 It takes the following arguments:
 
 - -n (required): The name of the report.
-- -p (required): The path to the V8 coverage report file.
+- -p (required): The path to the eslint report file.
 
-Ensure that the specified path leads to a V8 coverage report that can be passed to the Bitbucket API.
+Ensure that the specified path leads to an eslint json report.
 
-### Configuring Jest for Code Coverage Analysis
+### Configuring eslint to collect JSON report
 
-When configuring Jest for code coverage analysis, you may need to specify which files should be included in the coverage report. The `collectCoverageFrom` property in Jest configuration allows you to specify these files. Here's an example of a possible configuration:
+Eslint supports a JSON output by default. It can be enabled by a `--format json` CLI option.
+
+We recommend creating a separate script in `package.json` (if you already had a lint script), for example:
 
 ```javascript
-coverageProvider: 'v8',
-coverageReporters: ['json-summary'],
-collectCoverageFrom: [
-  './**/*.{js,ts}',
-  '!**/node_modules/**',
-  '!./.eslintrc.js',
-  '!./jest.config.ts',
-  '!./coverage/**',
-],
+  ...
+  "lint:json": "eslint --format json --quiet --max-warnings=0 --ext .js,.ts ./",
+  ...
 ```
+
+In this case, `--quiet` removes any warnings, so that only errors are captured (to reduce noise in bitbucket). The output of this could be piped into a `.json` file in your pipeline.
 
 ## Running within a Docker Container
 

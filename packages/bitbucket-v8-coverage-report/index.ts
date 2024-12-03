@@ -3,8 +3,9 @@
 import fs from 'fs/promises';
 import commandLineArgs from 'command-line-args';
 import { uploadReportToBitbucket } from '@zooshdigital/bitbucket-code-insights';
-import { createLogger } from 'utils/logger';
 import { BitbucketReportBody } from '@zooshdigital/bitbucket-code-insights/dist/types';
+
+import { createLogger } from 'utils/logger';
 
 interface CoverageResult {
   statements: number;
@@ -62,7 +63,9 @@ async function uploadReport() {
     } = args;
 
     if (!name || !reportPath) {
-      throw new Error('Bitbucket v8 Coverage Report - Usage: uploadReport -n <report-name> -p <report-path>');
+      throw new Error(
+        'Bitbucket v8 Coverage Report - Usage: bitbucket-v8-coverage-report -n <report-name> -p <report-path>',
+      );
     }
 
     const coverageResults = JSON.parse(await fs.readFile(reportPath, 'utf8'));
