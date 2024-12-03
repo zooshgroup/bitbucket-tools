@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import fs from 'fs/promises';
+import path from 'path';
 import commandLineArgs from 'command-line-args';
 import { uploadReportToBitbucket, uploadAnnotationsToBitbucket } from '@zooshdigital/bitbucket-code-insights';
 import { BitbucketAnnotation, BitbucketSeverity } from '@zooshdigital/bitbucket-code-insights/dist/types';
@@ -55,19 +56,19 @@ async function uploadReport() {
 
     const lint: LintFile[] = JSON.parse(await fs.readFile(reportPath, 'utf8'));
     lint.forEach((file) => {
-      const path = file.filePath.replace(/^\/opt\/atlassian\/pipelines\/agent\/build\//, '');
+      // const filePath = file.filePath.replace(/^\/opt\/atlassian\/pipelines\/agent\/build\//, '');
+      const filePath = path.relative(process.cwd(), file.filePath);
       totalErrors += file.errorCount;
       fixableErrors != file.fixableErrorCount;
       file.messages.forEach((message) => {
-        // https://api.bitbucket.org/2.0/repositories/zooshltd/slack-gpt-ts/commit/ccee2953303aa29d35a029fb6745c9238e70a161/statuses/build/
         counter++;
         items.push({
-          external_id: `eslint${counter}`,
+          external_id: `${name}.${process.env.BITBUCKET_COMMIT}.${counter}`,
           title: `Eslint: ${message.ruleId}`,
           annotation_type: 'CODE_SMELL',
           summary: `Eslint error: ${message.ruleId} ${message.fix ? `| fix: ${message.fix.text}` : ''}`,
           severity: severities[message.severity],
-          path,
+          path: filePath,
           line: message.line,
         });
       });
@@ -77,7 +78,7 @@ async function uploadReport() {
 
     await uploadReportToBitbucket('eslint', {
       title: name,
-      report_type: 'BUG',
+      report_type: 'TEST',
       details: `${reportResult} report`,
       result: reportResult,
       data: [
