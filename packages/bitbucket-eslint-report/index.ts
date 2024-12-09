@@ -122,7 +122,12 @@ async function uploadReport() {
     });
 
     if (items.length > 0) {
-      await uploadAnnotationsToBitbucket('eslint', items);
+      const chunkSize = 100;
+      const chunks = items.reduce((acc, _, i) => {
+        if (i % chunkSize === 0) acc.push(items.slice(i, i + chunkSize));
+        return acc;
+      }, [] as BitbucketAnnotation[][]);
+      await Promise.all(chunks.map((chunk) => uploadAnnotationsToBitbucket('eslint', chunk)));
     }
     logger.log('Report uploaded successfully', name);
 

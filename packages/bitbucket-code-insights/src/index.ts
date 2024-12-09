@@ -56,7 +56,7 @@ export async function uploadAnnotationsToBitbucket(externalId: string, body: Bit
   const commitHash = process.env.BITBUCKET_COMMIT ?? '';
   const token = process.env.BITBUCKET_BUILD_TOKEN ?? '';
 
-  const url = `http://api.bitbucket.org/2.0/repositories/${repoFullName}/commit/${commitHash}/reports/${externalId}/annotations`;
+  const url = `https://api.bitbucket.org/2.0/repositories/${repoFullName}/commit/${commitHash}/reports/${externalId}/annotations`;
 
   const response = await callApi(url, 'POST', body, token);
   if (response.ok) {
@@ -70,7 +70,7 @@ export async function uploadReportToBitbucket(externalId: string, body: Bitbucke
   const commitHash = process.env.BITBUCKET_COMMIT ?? '';
   const token = process.env.BITBUCKET_BUILD_TOKEN ?? '';
 
-  const url = `http://api.bitbucket.org/2.0/repositories/${repoFullName}/commit/${commitHash}/reports/${externalId}`;
+  const url = `https://api.bitbucket.org/2.0/repositories/${repoFullName}/commit/${commitHash}/reports/${externalId}`;
 
   const response = await callApi(url, 'PUT', body, token);
   if (response.ok) {
