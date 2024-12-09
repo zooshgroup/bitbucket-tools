@@ -1,6 +1,8 @@
 # Zoosh Bitbucket Code Insights
 
-The Zoosh Bitbucket Code Insights is designed for uploading reports to Bitbucket Pull Requests. It constructs the URL for the Bitbucket API based on the provided external ID (which represents the name of the report), and then sends a PUT request to update the report. The report body is formatted as JSON and includes details such as title, report type, details, result, and data. Upon successful upload, the script logs the response from Bitbucket.
+The Zoosh Bitbucket Code Insights is designed for uploading builds, reports or other metadata to Bitbucket Pull Requests. It constructs the URL for the Bitbucket API based on the provided external ID (which represents the name of the report), and then sends REST API requests to publish the information. The request body is formatted as JSON and includes necessary details such as title, report type, details, result, and data. Upon successful upload, the script logs the response from Bitbucket.
+
+The project is fully typed, so information about what and how can be uploaded is documented by types.
 
 ## Installation
 
@@ -16,11 +18,23 @@ or
 yarn add @zooshdigital/bitbucket-code-insights
 ```
 
+## Prerequisites
+
+### Authentication
+
+While some requests could be automatically authenticated running in a pipeline, Bitbucket doesn't allow that for all endpoints. Thus, for simplicity, the library expects an access token for all API calls. This can be a repository, project or workspace access token in the BITBUCKET_BUILD_TOKEN environment variable. Create a token and make it available as a repository or deployment variable to the pipeline.
+
+### Other identifiers
+
+Since information is attached to a commit (even in case of a pull request), the library needs the BITBUCKET_REPO_FULL_NAME and BITBUCKET_COMMIT environment variables to do that. These two are standard Bitbucket pipeline variables, so there is no need to set them explicitly if running the script in a pipeline.
+
 ## Usage
 
-### uploadReportToBitbucket Function
+The project offers the following function to easily upload metadata to our commits or pull requests:
 
-The project offers a function named `uploadReportToBitbucket`, allowing you to upload the provided reports to Bitbucket using the Bitbucket API.
+- `uploadReportToBitbucket`: Creates a "report" with the given metrics. This is best used for attaching useful information to a pull requests (for example coverage metrics).
+- `uploadAnnotationsToBitbucket`: Attaches "annotations" to a report created by the previous command (these annotations can be shown in the diff view of the pull request)
+- `createBuildOnBitbucket`: Creates a "build" with the given details. This is useful to show the result of a specific build or test step explicitly in the list of builds, besides the main pipeline build.
 
 More details can be found in the Bitbucket API documentation [here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-put).
 
@@ -36,30 +50,8 @@ const body = {
   // Report body
 };
 
-await uploadReportToBitbucket(externalId, body)
+await uploadReportToBitbucket(externalId, body);
 ```
-
-## Running within a Docker Container
-
-You have the option to run the script inside a Docker container if needed. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME** and **BITBUCKET_COMMIT**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container.
-
-Below is an example of how to run the container:
-
-```bash
-docker run --rm \
-  --add-host=host.docker.internal:host-gateway \
-  -e BITBUCKET_REPO_FULL_NAME=<repo_full_name> \
-  -e BITBUCKET_COMMIT=<commit_hash> \
-  <docker_image_name>
-```
-
-Replace <repo_full_name> with the full name of your Bitbucket repository, <commit_hash> with the commit hash you want to analyze, and <docker_image_name> with the name of the Docker image you built.
-
-## Authentication
-
-Your requests will automatically be routed through a proxy server running alongside every pipeline on 'localhost:29418'. This proxy server adds a valid Auth-Header to your requests, eliminating the need for additional authentication configurations.
-
-See more in the official Bitbucket documentation [here](https://support.atlassian.com/bitbucket-cloud/docs/code-insights/).
 
 ## License
 

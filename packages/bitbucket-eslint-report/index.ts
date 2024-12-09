@@ -34,7 +34,8 @@ type LintFile = {
 const optionDefinitions = [
   { name: 'name', alias: 'n', type: String },
   { name: 'path', alias: 'p', type: String, multiple: true },
-  { name: 'build', alias: 'b', type: Boolean },
+  { name: 'add-build', alias: 'a', type: Boolean },
+  { name: 'strict', alias: 's', type: Boolean },
 ];
 
 const args = commandLineArgs(optionDefinitions);
@@ -57,10 +58,12 @@ async function uploadReport() {
   let fixableWarnings = 0;
 
   try {
-    const { name, path: reportPaths, build } = args;
+    const { name, path: reportPaths, 'add-build': addBuild, strict } = args;
 
     if (!name || !reportPaths || reportPaths.length === 0) {
-      throw new Error('Bitbucket Eslint Report - Usage: bitbucket-eslint-report -n <report-name> -p <report-path>');
+      throw new Error(
+        'Bitbucket Eslint Report - Usage: bitbucket-eslint-report -n <report-name> -p <report-path> [-b] [-s]',
+      );
     }
 
     reportPaths.forEach(async (reportPath: string) => {
@@ -69,9 +72,9 @@ async function uploadReport() {
         // const filePath = file.filePath.replace(/^\/opt\/atlassian\/pipelines\/agent\/build\//, '');
         const filePath = path.relative(process.env.BITBUCKET_CLONE_DIR ?? process.cwd(), file.filePath);
         totalErrors += file.errorCount;
-        fixableErrors != file.fixableErrorCount;
+        fixableErrors += file.fixableErrorCount;
         totalWarnings += file.warningCount;
-        fixableWarnings != file.fixableWarningCount;
+        fixableWarnings += file.fixableWarningCount;
         file.messages.forEach((message) => {
           counter++;
           items.push({
@@ -87,13 +90,13 @@ async function uploadReport() {
       });
     });
 
-    const reportResult = items.length > 0 ? 'FAILED' : 'PASSED';
+    const passed = strict ? totalErrors + totalWarnings === 0 : totalErrors === 0;
 
     await uploadReportToBitbucket('eslint', {
       title: name,
       report_type: 'TEST',
-      details: `${reportResult} report`,
-      result: reportResult,
+      details: `${name} report`,
+      result: passed ? 'PASSED' : 'FAILED',
       data: [
         {
           title: 'Errors',
@@ -123,13 +126,16 @@ async function uploadReport() {
     }
     logger.log('Report uploaded successfully', name);
 
-    if (build) {
+    if (addBuild) {
+      const url = process.env.BITBUCKET_PR_ID
+        ? `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/pipelines/results/${process.env.BITBUCKET_PR_ID}`
+        : `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/commit/${process.env.BITBUCKET_COMMIT}`;
       createBuildOnBitbucket({
         key: name,
-        state: items.length > 0 ? 'FAILED' : 'SUCCESSFUL',
+        state: passed ? 'SUCCESSFUL' : 'FAILED',
         name,
         description: `${name} result`,
-        url: '#',
+        url,
       });
     }
   } catch (error) {

@@ -91,13 +91,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zooshdigital/bitbucket-code-insights@npm:1.1.4":
-  version: 1.1.4
-  resolution: "@zooshdigital/bitbucket-code-insights@npm:1.1.4"
+"@zooshdigital/bitbucket-code-insights@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@zooshdigital/bitbucket-code-insights@npm:1.2.1"
   dependencies:
-    http-proxy-agent: 7.0.2
     node-fetch: 2.7.0
-  checksum: 4c5c79a547f8c78513152a292673cd7b4557f14ccbd9347ad7eecd62a6c559710ca8ad18aa2261b7998207240d52ab75b062ce14a693f1ffe7fc5c1ca223322a
+  checksum: 7c0a3bdd39c62fef953ef7f335d46fb402e0c114a688ad5d09e15f24b01abbfc747d236da668ef0af90d44be47233bd34865e89836fc85bc6f2d18a5deed2354
   languageName: node
   linkType: hard
 
@@ -107,7 +106,7 @@ __metadata:
   dependencies:
     "@types/command-line-args": 5.2.3
     "@types/node": 20.11.30
-    "@zooshdigital/bitbucket-code-insights": 1.1.4
+    "@zooshdigital/bitbucket-code-insights": 1.2.1
     command-line-args: 5.2.1
     cross-env: 7.0.3
     tsc-alias: 1.8.2
@@ -552,7 +551,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-proxy-agent@npm:7.0.2, http-proxy-agent@npm:^7.0.0":
+"http-proxy-agent@npm:^7.0.0":
   version: 7.0.2
   resolution: "http-proxy-agent@npm:7.0.2"
   dependencies:

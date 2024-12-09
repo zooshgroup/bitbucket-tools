@@ -1,6 +1,6 @@
 {
   "name": "@zooshdigital/bitbucket-code-insights",
-  "version": "1.1.4",
+  "version": "1.2.1",
   "packageManager": "yarn@3.6.3",
   "description": "Function to upload reports to Bitbucket",
   "author": {
@@ -33,7 +33,6 @@
   "license": "GPL-3.0",
   "homepage": "https://github.com/zooshgroup/bitbucket-tools",
   "dependencies": {
-    "http-proxy-agent": "7.0.2",
     "node-fetch": "2.7.0"
   },
   "devDependencies": {

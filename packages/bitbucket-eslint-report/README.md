@@ -18,32 +18,7 @@ yarn add @zooshdigital/bitbucket-eslint-report
 
 ## Usage
 
-### uploadReport Function
-
-The uploadReport function enables you to upload coverage reports to Bitbucket pipelines.
-
-To utilize the functionality simply run it using npx. Below is an example of how to execute the command-line utility `@zooshdigital/bitbucket-eslint-report` with **npx** directly from your terminal:
-
-#### Using npx
-
-```bash
-npx  @zooshdigital/bitbucket-eslint-report -n reportName -p ./path-to-the-eslint-report.json
-```
-
-#### Using yarn
-
-```bash
-yarn bitbucket-eslint-report -n reportName -p ./path-to-the-eslint-report.json
-```
-
-If you prefer using yarn, ensure that the @zooshdigital/bitbucket-eslint-report is listed in the dependencies of the current workspace if you're using multiple workspaces.
-
-It takes the following arguments:
-
-- -n (required): The name of the report.
-- -p (required): The path to the eslint report file.
-
-Ensure that the specified path leads to an eslint json report.
+This tool enables you to upload coverage reports to Bitbucket pipelines.
 
 ### Configuring eslint to collect JSON report
 
@@ -59,28 +34,42 @@ We recommend creating a separate script in `package.json` (if you already had a 
 
 In this case, `--quiet` removes any warnings, so that only errors are captured (to reduce noise in bitbucket). The output of this could be piped into a `.json` file in your pipeline.
 
-## Running within a Docker Container
+### Consuming the JSON report
 
-You have the option to run the script inside a Docker container if needed. Ensure you pass the required environment variables **BITBUCKET_REPO_FULL_NAME**, **BITBUCKET_COMMIT** and **BITBUCKET_CLONE_DIR**. Additionally, to enable the container to resolve host.docker.internal to the host machine's address, you need to add the **--add-host=host.docker.internal:host-gateway** flag when running the container.
-
-Below is an example of how to run the container:
+Simply run the tool using npx. Below is an example of how to execute the command-line utility `@zooshdigital/bitbucket-eslint-report` directly from your terminal or a pipeline:
 
 ```bash
-docker run --rm \
-  --add-host=host.docker.internal:host-gateway \
-  -e BITBUCKET_REPO_FULL_NAME=<repo_full_name> \
-  -e BITBUCKET_COMMIT=<commit_hash> \
-  -e BITBUCKET_CLONE_DIR=<absolute path of repository root> \
-  <docker_image_name>
+npx @zooshdigital/bitbucket-eslint-report -n reportName -p ./path-to-the-eslint-report.json
 ```
 
-Replace <repo_full_name> with the full name of your Bitbucket repository, <commit_hash> with the commit hash you want to analyze, and <docker_image_name> with the name of the Docker image you built.
+or
 
-## Authentication
+```bash
+yarn bitbucket-eslint-report -n reportName -p ./path-to-the-eslint-report.json
+```
 
-Your requests will automatically be routed through a proxy server running alongside every pipeline on 'localhost:29418'. This proxy server adds a valid Auth-Header to your requests, eliminating the need for additional authentication configurations.
+If you prefer using yarn, ensure that the @zooshdigital/bitbucket-eslint-report is listed in the dependencies of the current workspace if you're using multiple workspaces.
 
-See more in the official Bitbucket documentation [here](https://support.atlassian.com/bitbucket-cloud/docs/code-insights/).
+### Configuration
+
+It takes the following arguments:
+
+- `-n [name]` or `--name [name]` (required): The name of the report in Bitbucket.
+- `-p [path]` or `--path [path]` (required): The path to the eslint report file.
+- `-a` or `--add-build` (optional): Create a success/failed "build" as well besides the report.
+- `-s` or `--strict` (optional): Strict mode, consider report/build failed in case of eslint warnings as well (by default, only fails in case of eslint errors)
+
+Ensure that the specified path leads to an eslint json report.
+
+## Prerequisites
+
+### Authentication
+
+While some requests could be automatically authenticated running in a pipeline, Bitbucket doesn't allow that for all endpoints. Thus, for simplicity, the library expects an access token for all API calls. This can be a repository, project or workspace access token in the BITBUCKET_BUILD_TOKEN environment variable. Create a token and make it available as a repository or deployment variable to the pipeline.
+
+### Other identifiers
+
+Since information is attached to a commit (even in case of a pull request), the library needs the BITBUCKET_REPO_FULL_NAME and BITBUCKET_COMMIT environment variables to do that. These two are standard Bitbucket pipeline variables, so there is no need to set them explicitly if running the script in a pipeline.
 
 ## License
 

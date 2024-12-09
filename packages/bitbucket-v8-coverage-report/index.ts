@@ -2,7 +2,7 @@
 
 import fs from 'fs/promises';
 import commandLineArgs from 'command-line-args';
-import { uploadReportToBitbucket } from '@zooshdigital/bitbucket-code-insights';
+import { createBuildOnBitbucket, uploadReportToBitbucket } from '@zooshdigital/bitbucket-code-insights';
 import { BitbucketReportBody } from '@zooshdigital/bitbucket-code-insights/dist/types';
 
 import { createLogger } from 'utils/logger';
@@ -20,21 +20,22 @@ const optionDefinitions = [
   { name: 'min-statements-coverage', alias: 's', type: Number },
   { name: 'min-functions-coverage', alias: 'f', type: Number },
   { name: 'min-branches-coverage', alias: 'b', type: Number },
+  { name: 'add-build', alias: 'a', type: Boolean },
 ];
 
 const args = commandLineArgs(optionDefinitions);
 
 const logger = createLogger('Zoosh Bitbucket v8 Coverage Report');
 
-function getReportResult(coverageResult: CoverageResult, minCoverage: MinCoverage): 'PASSED' | 'FAILED' {
+function getReportResult(coverageResult: CoverageResult, minCoverage: MinCoverage): boolean {
   const failedThreshold = Object.keys(minCoverage).some((key) => {
     const coverageType = key as CoverageType;
     return coverageResult[coverageType] < (minCoverage[coverageType] ?? 0);
   });
   if (failedThreshold) {
-    return 'FAILED';
+    return false;
   }
-  return 'PASSED';
+  return true;
 }
 
 async function uploadReport() {
@@ -46,6 +47,7 @@ async function uploadReport() {
       'min-statements-coverage': minStatementsCoverage,
       'min-functions-coverage': minFunctionsCoverage,
       'min-branches-coverage': minBranchesCoverage,
+      'add-build': addBuild,
     } = args;
 
     if (!name || !reportPath) {
@@ -63,7 +65,7 @@ async function uploadReport() {
       branches: coverageResults.total.branches.pct,
     };
 
-    const reportResult = getReportResult(coverageResultPercentage, {
+    const passed = getReportResult(coverageResultPercentage, {
       statements: minStatementsCoverage,
       lines: minLinesCoverage,
       functions: minFunctionsCoverage,
@@ -74,7 +76,7 @@ async function uploadReport() {
       title: name,
       report_type: 'COVERAGE',
       details: `Coverage report for ${name}.`,
-      result: reportResult,
+      result: passed ? 'PASSED' : 'FAILED',
       data: [
         {
           title: 'Lines',
@@ -100,6 +102,20 @@ async function uploadReport() {
     };
 
     await uploadReportToBitbucket(name, body);
+
+    if (addBuild) {
+      const url = process.env.BITBUCKET_PR_ID
+        ? `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/pipelines/results/${process.env.BITBUCKET_PR_ID}`
+        : `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/commit/${process.env.BITBUCKET_COMMIT}`;
+      createBuildOnBitbucket({
+        key: name,
+        state: passed ? 'SUCCESSFUL' : 'FAILED',
+        name,
+        description: `${name} result`,
+        url,
+      });
+    }
+
     logger.log('Report uploaded successfully', name);
   } catch (error) {
     logger.log(`Error uploading report: ${error}`);
