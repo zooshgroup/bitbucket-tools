@@ -7,5 +7,5 @@
   "arrowParens": "always",
   "printWidth": 120,
   "singleQuote": true,
-  "endOfLine": "auto"
+  "endOfLine": "lf"
 }

@@ -18,6 +18,6 @@ export function createLogger(packageName: string) {
       const formattedMessage = formatMessage(`CRITICAL: ${message}`, additionalInfo);
       console.error(formattedMessage);
       throw new Error(formattedMessage);
-    }
+    },
   };
 }
