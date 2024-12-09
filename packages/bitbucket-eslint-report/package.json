@@ -1,6 +1,6 @@
 {
   "name": "@zooshdigital/bitbucket-eslint-report",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "packageManager": "yarn@3.6.3",
   "description": "Command-line tool to upload eslint reports to Bitbucket",
   "keywords": [

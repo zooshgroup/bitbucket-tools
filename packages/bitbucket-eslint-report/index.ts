@@ -137,7 +137,7 @@ async function uploadReport() {
       const url = process.env.BITBUCKET_PR_ID
         ? `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/pull-requests/${process.env.BITBUCKET_PR_ID}/diff`
         : `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/commit/${process.env.BITBUCKET_COMMIT}`;
-      createBuildOnBitbucket({
+      await createBuildOnBitbucket({
         key: name,
         state: passed ? 'SUCCESSFUL' : 'FAILED',
         name,

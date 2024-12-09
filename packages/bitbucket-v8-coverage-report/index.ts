@@ -105,9 +105,9 @@ async function uploadReport() {
 
     if (addBuild) {
       const url = process.env.BITBUCKET_PR_ID
-        ? `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/pipelines/results/${process.env.BITBUCKET_PR_ID}`
+        ? `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/pull-requests/${process.env.BITBUCKET_PR_ID}/overview`
         : `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/commit/${process.env.BITBUCKET_COMMIT}`;
-      createBuildOnBitbucket({
+      await createBuildOnBitbucket({
         key: name,
         state: passed ? 'SUCCESSFUL' : 'FAILED',
         name,
