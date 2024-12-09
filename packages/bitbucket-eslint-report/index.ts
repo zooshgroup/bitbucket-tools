@@ -94,8 +94,8 @@ async function uploadReport() {
 
     const passed = strict ? totalErrors + totalWarnings === 0 : totalErrors === 0;
 
-    await uploadReportToBitbucket('eslint', {
-      title: name,
+    await uploadReportToBitbucket(name, {
+      title: `${name} (${totalErrors} errors, ${totalWarnings} warnings)`,
       report_type: 'TEST',
       details: `${name} report`,
       result: passed ? 'PASSED' : 'FAILED',
@@ -129,7 +129,7 @@ async function uploadReport() {
         if (i % chunkSize === 0) acc.push(items.slice(i, i + chunkSize));
         return acc;
       }, [] as BitbucketAnnotation[][]);
-      await Promise.all(chunks.map((chunk) => uploadAnnotationsToBitbucket('eslint', chunk)));
+      await Promise.all(chunks.map((chunk) => uploadAnnotationsToBitbucket(name, chunk)));
     }
     logger.log('Report uploaded successfully', name);
 
@@ -141,7 +141,7 @@ async function uploadReport() {
         key: name,
         state: passed ? 'SUCCESSFUL' : 'FAILED',
         name,
-        description: `${name} result`,
+        description: `${totalErrors} errors, ${totalWarnings} warnings`,
         url,
       });
     }

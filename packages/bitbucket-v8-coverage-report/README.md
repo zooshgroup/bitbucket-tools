@@ -58,6 +58,7 @@ It takes the following arguments:
 
 - `-n [name]` or `--name [name]` (required): The name of the report in Bitbucket.
 - `-p [path]` or `--path [path]` (required): The path to the V8 coverage report file.
+- `-c [percentage]` or `--min-coverage [percentage]` (optional): Optional threshold for the average coverage (average of the other four metrics).
 - `-l [percentage]` or `--min-lines-coverage [percentage]` (optional): Optional threshold for the line coverage value.
 - `-s [percentage]` or `--min-statements-coverage [percentage]` (optional): Optional threshold for the statements coverage value.
 - `-f [percentage]` or `--min-functions-coverage [percentage]` (optional): Optional threshold for the functions coverage value.

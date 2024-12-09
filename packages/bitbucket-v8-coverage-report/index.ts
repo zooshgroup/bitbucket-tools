@@ -16,6 +16,7 @@ type MinCoverage = Record<CoverageType, number | undefined>;
 const optionDefinitions = [
   { name: 'name', alias: 'n', type: String },
   { name: 'path', alias: 'p', type: String },
+  { name: 'min-coverage', alias: 'c', type: Number },
   { name: 'min-lines-coverage', alias: 'l', type: Number },
   { name: 'min-statements-coverage', alias: 's', type: Number },
   { name: 'min-functions-coverage', alias: 'f', type: Number },
@@ -27,12 +28,20 @@ const args = commandLineArgs(optionDefinitions);
 
 const logger = createLogger('Zoosh Bitbucket v8 Coverage Report');
 
-function getReportResult(coverageResult: CoverageResult, minCoverage: MinCoverage): boolean {
+function getReportResult(
+  coverageResult: CoverageResult,
+  minCoverage: MinCoverage,
+  averageCoverage: number,
+  minAverageCoverage: number | undefined,
+): boolean {
   const failedThreshold = Object.keys(minCoverage).some((key) => {
     const coverageType = key as CoverageType;
     return coverageResult[coverageType] < (minCoverage[coverageType] ?? 0);
   });
   if (failedThreshold) {
+    return false;
+  }
+  if (averageCoverage < (minAverageCoverage ?? 0)) {
     return false;
   }
   return true;
@@ -43,6 +52,7 @@ async function uploadReport() {
     const {
       name,
       path: reportPath,
+      'min-coverage': minAverageCoverage,
       'min-lines-coverage': minLinesCoverage,
       'min-statements-coverage': minStatementsCoverage,
       'min-functions-coverage': minFunctionsCoverage,
@@ -65,17 +75,24 @@ async function uploadReport() {
       branches: coverageResults.total.branches.pct,
     };
 
-    const passed = getReportResult(coverageResultPercentage, {
-      statements: minStatementsCoverage,
-      lines: minLinesCoverage,
-      functions: minFunctionsCoverage,
-      branches: minBranchesCoverage,
-    });
+    const averageCoverage = Math.round(Object.values(coverageResultPercentage).reduce((acc, val) => acc + val, 0) / 4);
+
+    const passed = getReportResult(
+      coverageResultPercentage,
+      {
+        statements: minStatementsCoverage,
+        lines: minLinesCoverage,
+        functions: minFunctionsCoverage,
+        branches: minBranchesCoverage,
+      },
+      averageCoverage,
+      minAverageCoverage,
+    );
 
     const body: BitbucketReportBody = {
-      title: name,
+      title: `${name} (average ${averageCoverage}%)`,
       report_type: 'COVERAGE',
-      details: `Coverage report for ${name}.`,
+      details: `${name} report`,
       result: passed ? 'PASSED' : 'FAILED',
       data: [
         {
@@ -111,7 +128,7 @@ async function uploadReport() {
         key: name,
         state: passed ? 'SUCCESSFUL' : 'FAILED',
         name,
-        description: `${name} result`,
+        description: `Average: ${averageCoverage}%`,
         url,
       });
     }
