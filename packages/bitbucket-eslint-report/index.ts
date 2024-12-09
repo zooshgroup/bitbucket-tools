@@ -66,29 +66,31 @@ async function uploadReport() {
       );
     }
 
-    reportPaths.forEach(async (reportPath: string) => {
-      const lint: LintFile[] = JSON.parse(await fs.readFile(reportPath, 'utf8'));
-      lint.forEach((file) => {
-        // const filePath = file.filePath.replace(/^\/opt\/atlassian\/pipelines\/agent\/build\//, '');
-        const filePath = path.relative(process.env.BITBUCKET_CLONE_DIR ?? process.cwd(), file.filePath);
-        totalErrors += file.errorCount;
-        fixableErrors += file.fixableErrorCount;
-        totalWarnings += file.warningCount;
-        fixableWarnings += file.fixableWarningCount;
-        file.messages.forEach((message) => {
-          counter++;
-          items.push({
-            external_id: `${name}.${process.env.BITBUCKET_COMMIT}.${counter}`,
-            title: `Eslint: ${message.ruleId}`,
-            annotation_type: 'CODE_SMELL',
-            summary: `Eslint error: ${message.ruleId} ${message.fix ? `| fix: ${message.fix.text}` : ''}`,
-            severity: severities[message.severity],
-            path: filePath,
-            line: message.line,
+    await Promise.all(
+      reportPaths.map(async (reportPath: string) => {
+        const lint: LintFile[] = JSON.parse(await fs.readFile(reportPath, 'utf8'));
+        lint.forEach((file) => {
+          // const filePath = file.filePath.replace(/^\/opt\/atlassian\/pipelines\/agent\/build\//, '');
+          const filePath = path.relative(process.env.BITBUCKET_CLONE_DIR ?? process.cwd(), file.filePath);
+          totalErrors = totalErrors + file.errorCount;
+          fixableErrors = fixableErrors + file.fixableErrorCount;
+          totalWarnings = totalWarnings + file.warningCount;
+          fixableWarnings = fixableWarnings + file.fixableWarningCount;
+          file.messages.forEach((message) => {
+            counter++;
+            items.push({
+              external_id: `${name}.${process.env.BITBUCKET_COMMIT}.${counter}`,
+              title: `Eslint: ${message.ruleId}`,
+              annotation_type: 'CODE_SMELL',
+              summary: `Eslint error: ${message.ruleId} ${message.fix ? `| fix: ${message.fix.text}` : ''}`,
+              severity: severities[message.severity],
+              path: filePath,
+              line: message.line,
+            });
           });
         });
-      });
-    });
+      }),
+    );
 
     const passed = strict ? totalErrors + totalWarnings === 0 : totalErrors === 0;
 
@@ -133,7 +135,7 @@ async function uploadReport() {
 
     if (addBuild) {
       const url = process.env.BITBUCKET_PR_ID
-        ? `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/pipelines/results/${process.env.BITBUCKET_PR_ID}`
+        ? `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/pull-requests/${process.env.BITBUCKET_PR_ID}/diff`
         : `https://bitbucket.org/${process.env.BITBUCKET_REPO_FULL_NAME}/commit/${process.env.BITBUCKET_COMMIT}`;
       createBuildOnBitbucket({
         key: name,
