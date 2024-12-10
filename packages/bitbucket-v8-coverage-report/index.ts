@@ -75,7 +75,10 @@ async function uploadReport() {
       branches: coverageResults.total.branches.pct,
     };
 
-    const averageCoverage = Math.round(Object.values(coverageResultPercentage).reduce((acc, val) => acc + val, 0) / 4);
+    const coverageValues = Object.values(coverageResultPercentage);
+    const averageCoverage = coverageValues.length
+      ? Math.round(coverageValues.reduce((acc, val) => acc + val, 0) / coverageValues.length)
+      : 0;
 
     const passed = getReportResult(
       coverageResultPercentage,

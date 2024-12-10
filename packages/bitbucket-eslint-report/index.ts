@@ -70,7 +70,8 @@ async function uploadReport() {
       reportPaths.map(async (reportPath: string) => {
         const lint: LintFile[] = JSON.parse(await fs.readFile(reportPath, 'utf8'));
         lint.forEach((file) => {
-          // const filePath = file.filePath.replace(/^\/opt\/atlassian\/pipelines\/agent\/build\//, '');
+          // This could be a fallback in case the process.cwd() replacement gets broken (keeping for future reference):
+          // file.filePath.replace(/^\/opt\/atlassian\/pipelines\/agent\/build\//, '');
           const filePath = path.relative(process.env.BITBUCKET_CLONE_DIR ?? process.cwd(), file.filePath);
           totalErrors = totalErrors + file.errorCount;
           fixableErrors = fixableErrors + file.fixableErrorCount;
