@@ -1,12 +1,12 @@
 {
-  "name": "@zooshdigital/bitbucket-v8-coverage-report",
+  "name": "@zooshdigital/bitbucket-eslint-report",
   "version": "1.2.9",
   "packageManager": "yarn@3.6.3",
-  "description": "Command-line tool to upload coverage reports to Bitbucket",
+  "description": "Command-line tool to upload eslint reports to Bitbucket",
   "keywords": [
     "Bitbucket",
     "upload",
-    "coverage",
+    "eslint",
     "report",
     "command-line",
     "@zooshdigital/bitbucket-code-insights",
