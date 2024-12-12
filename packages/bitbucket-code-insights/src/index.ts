@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 import { createLogger } from 'utils/logger';
-import { BitbucketAnnotation, BitbucketBuildBody, BitbucketReportBody } from './types';
+import { BitbucketAnnotation, BitbucketBuildBody, BitbucketReportBody, BitbucketPrCommentBody } from './types';
 
 const logger = createLogger('Bitbucket Code Insights');
 
@@ -85,6 +85,20 @@ export async function createBuildOnBitbucket(body: BitbucketBuildBody) {
   const token = process.env.BITBUCKET_BUILD_TOKEN ?? '';
 
   const url = `https://api.bitbucket.org/2.0/repositories/${repoFullName}/commit/${commitHash}/statuses/build`;
+
+  const response = await callApi(url, 'POST', body, token);
+  if (response.ok) {
+    logger.log(`Build created successfully.`);
+  }
+}
+
+export async function createCommentOnBitbucket(body: BitbucketPrCommentBody) {
+  assertEnvVars();
+  const repoFullName = process.env.BITBUCKET_REPO_FULL_NAME ?? '';
+  const pullRequestId = process.env.BITBUCKET_PR_ID ?? '';
+  const token = process.env.BITBUCKET_BUILD_TOKEN ?? '';
+
+  const url = `https://api.bitbucket.org/2.0/repositories/${repoFullName}/pullrequests/${pullRequestId}/comments`;
 
   const response = await callApi(url, 'POST', body, token);
   if (response.ok) {

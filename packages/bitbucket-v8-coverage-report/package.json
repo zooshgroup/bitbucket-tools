@@ -1,6 +1,6 @@
 {
   "name": "@zooshdigital/bitbucket-v8-coverage-report",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "packageManager": "yarn@3.6.3",
   "description": "Command-line tool to upload coverage reports to Bitbucket",
   "keywords": [
@@ -34,8 +34,9 @@
   "license": "GPL-3.0",
   "homepage": "https://github.com/zooshgroup/bitbucket-tools",
   "dependencies": {
-    "@zooshdigital/bitbucket-code-insights": "1.2.2",
-    "command-line-args": "5.2.1"
+    "@zooshdigital/bitbucket-code-insights": "file:../bitbucket-code-insights",
+    "command-line-args": "5.2.1",
+    "junit2json": "3.1.12"
   },
   "devDependencies": {
     "@types/command-line-args": "5.2.3",

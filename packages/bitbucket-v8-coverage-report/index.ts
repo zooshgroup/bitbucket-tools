@@ -2,7 +2,12 @@
 
 import fs from 'fs/promises';
 import commandLineArgs from 'command-line-args';
-import { createBuildOnBitbucket, uploadReportToBitbucket } from '@zooshdigital/bitbucket-code-insights';
+import { parse as parseJUnit, TestSuites } from 'junit2json';
+import {
+  createBuildOnBitbucket,
+  createCommentOnBitbucket,
+  uploadReportToBitbucket,
+} from '@zooshdigital/bitbucket-code-insights';
 import { BitbucketReportBody } from '@zooshdigital/bitbucket-code-insights/dist/types';
 
 import { createLogger } from 'utils/logger';
@@ -22,6 +27,8 @@ const optionDefinitions = [
   { name: 'min-functions-coverage', alias: 'f', type: Number },
   { name: 'min-branches-coverage', alias: 'b', type: Number },
   { name: 'add-build', alias: 'a', type: Boolean },
+  { name: 'junit-path', alias: 'j', type: String },
+  { name: 'failed-test-comment', alias: 't', type: Boolean },
 ];
 
 const args = commandLineArgs(optionDefinitions);
@@ -58,6 +65,8 @@ async function uploadReport() {
       'min-functions-coverage': minFunctionsCoverage,
       'min-branches-coverage': minBranchesCoverage,
       'add-build': addBuild,
+      'junit-path': junitPath,
+      'failed-test-comment': failedTestComment,
     } = args;
 
     if (!name || !reportPath) {
@@ -134,6 +143,38 @@ async function uploadReport() {
         description: `Average: ${averageCoverage}%`,
         url,
       });
+
+    if (failedTestComment && junitPath) {
+      const jUnitResult = (await parseJUnit(await fs.readFile(junitPath, 'utf8'))) as TestSuites;
+      if (jUnitResult) {
+        const failedTestCases =
+          jUnitResult.testsuite?.flatMap(
+            (testSuite) => testSuite.testcase?.filter((testCase) => !!testCase.failure) ?? [],
+          ) ?? [];
+        if (failedTestCases.length) {
+          const comment = `## ${failedTestCases.length} test case(s) failed!
+
+${failedTestCases.map(
+  (testCase) => `### ${testCase.name}
+
+${testCase.failure
+  ?.map(
+    (failure) => `\`\`\`
+${failure.inner}
+\`\`\`
+
+`,
+  )
+  .join('\n')}`,
+)}`;
+          await createCommentOnBitbucket({
+            content: {
+              raw: comment,
+              //markup: 'markdown',
+            },
+          });
+        }
+      }
     }
 
     logger.log('Report uploaded successfully', name);
