@@ -77,7 +77,7 @@ async function uploadReport() {
 
     const coverageResults = JSON.parse(await fs.readFile(reportPath, 'utf8'));
 
-    const coverageResultPercentage = {
+    const coverageResultPercentage: CoverageResult = {
       statements: coverageResults.total.statements.pct,
       lines: coverageResults.total.lines.pct,
       functions: coverageResults.total.functions.pct,
@@ -143,6 +143,7 @@ async function uploadReport() {
         description: `Average: ${averageCoverage}%`,
         url,
       });
+    }
 
     if (failedTestComment && junitPath) {
       const jUnitResult = (await parseJUnit(await fs.readFile(junitPath, 'utf8'))) as TestSuites;
@@ -152,10 +153,10 @@ async function uploadReport() {
             (testSuite) => testSuite.testcase?.filter((testCase) => !!testCase.failure) ?? [],
           ) ?? [];
         if (failedTestCases.length) {
-          const comment = `## ${failedTestCases.length} test case(s) failed!
+          const comment = `# ${failedTestCases.length} test case(s) failed!
 
 ${failedTestCases.map(
-  (testCase) => `### ${testCase.name}
+  (testCase) => `## ${testCase.name}
 
 ${testCase.failure
   ?.map(
