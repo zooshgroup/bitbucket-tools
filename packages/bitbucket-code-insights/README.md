@@ -35,6 +35,7 @@ The project offers the following function to easily upload metadata to our commi
 - `uploadReportToBitbucket`: Creates a "report" with the given metrics. This is best used for attaching useful information to a pull requests (for example coverage metrics).
 - `uploadAnnotationsToBitbucket`: Attaches "annotations" to a report created by the previous command (these annotations can be shown in the diff view of the pull request)
 - `createBuildOnBitbucket`: Creates a "build" with the given details. This is useful to show the result of a specific build or test step explicitly in the list of builds, besides the main pipeline build.
+- `createCommentOnBitbucket`: Creates a simple "comment" with the given text on a pull request. This is useful to highlight something important explicitly and also trigger sending an email to reviewers.
 
 More details can be found in the Bitbucket API documentation [here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-put).
 
