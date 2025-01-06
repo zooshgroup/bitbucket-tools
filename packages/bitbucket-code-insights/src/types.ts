@@ -34,3 +34,9 @@ export interface BitbucketBuildBody {
   description: string;
   url: string;
 }
+
+export interface BitbucketPrCommentBody {
+  content: {
+    raw: string;
+  };
+}

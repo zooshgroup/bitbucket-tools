@@ -8,6 +8,12 @@ The **Zoosh Bitbucket Code Insights** is designed for uploading reports to Bitbu
 
 For more details, please refer to the [Zoosh Bitbucket Code Insights README](packages/bitbucket-code-insights/README.md)
 
+## Zoosh bitbucket-eslint-report
+
+The **Zoosh bitbucket-eslint-report** is designed to facilitate the upload of an eslint report to Bitbucket. It provides functions to automate the process of uploading reports generated during build processes.
+
+For more details, please refer to the [Zoosh bitbucket-eslint-report README](packages/bitbucket-eslint-report/README.md).
+
 ## Zoosh bitbucket-v8-coverage-report
 
 The **Zoosh bitbucket-v8-coverage-report** is designed to facilitate the upload of V8 test coverage reports to Bitbucket. It provides functions to automate the process of uploading reports generated during build processes.

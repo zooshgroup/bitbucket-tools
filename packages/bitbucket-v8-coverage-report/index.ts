@@ -2,7 +2,12 @@
 
 import fs from 'fs/promises';
 import commandLineArgs from 'command-line-args';
-import { createBuildOnBitbucket, uploadReportToBitbucket } from '@zooshdigital/bitbucket-code-insights';
+import { parse as parseJUnit, TestCase, TestSuites } from 'junit2json';
+import {
+  createBuildOnBitbucket,
+  createCommentOnBitbucket,
+  uploadReportToBitbucket,
+} from '@zooshdigital/bitbucket-code-insights';
 import { BitbucketReportBody } from '@zooshdigital/bitbucket-code-insights/dist/types';
 
 import { createLogger } from 'utils/logger';
@@ -22,6 +27,8 @@ const optionDefinitions = [
   { name: 'min-functions-coverage', alias: 'f', type: Number },
   { name: 'min-branches-coverage', alias: 'b', type: Number },
   { name: 'add-build', alias: 'a', type: Boolean },
+  { name: 'junit-path', alias: 'j', type: String },
+  { name: 'failed-test-comment', alias: 't', type: Boolean },
 ];
 
 const args = commandLineArgs(optionDefinitions);
@@ -47,6 +54,26 @@ function getReportResult(
   return true;
 }
 
+const getTestFailureText = (testCase: TestCase): string =>
+  testCase.failure
+    ?.map(
+      (failure) => `\`\`\`
+${failure.inner}
+\`\`\`
+`,
+    )
+    .join('\n') ?? '';
+
+const getTestCaseText = (testCase: TestCase): string =>
+  `## ${testCase.name}
+
+${getTestFailureText(testCase)}`;
+
+const getTestCasesText = (testCases: TestCase[]): string =>
+  `# ${testCases.length} test case(s) failed!
+
+${testCases.map(getTestCaseText).join('\n\n')}`;
+
 async function uploadReport() {
   try {
     const {
@@ -58,6 +85,8 @@ async function uploadReport() {
       'min-functions-coverage': minFunctionsCoverage,
       'min-branches-coverage': minBranchesCoverage,
       'add-build': addBuild,
+      'junit-path': junitPath,
+      'failed-test-comment': failedTestComment,
     } = args;
 
     if (!name || !reportPath) {
@@ -68,7 +97,7 @@ async function uploadReport() {
 
     const coverageResults = JSON.parse(await fs.readFile(reportPath, 'utf8'));
 
-    const coverageResultPercentage = {
+    const coverageResultPercentage: CoverageResult = {
       statements: coverageResults.total.statements.pct,
       lines: coverageResults.total.lines.pct,
       functions: coverageResults.total.functions.pct,
@@ -134,6 +163,24 @@ async function uploadReport() {
         description: `Average: ${averageCoverage}%`,
         url,
       });
+    }
+
+    if (failedTestComment && junitPath) {
+      const jUnitResult = (await parseJUnit(await fs.readFile(junitPath, 'utf8'))) as TestSuites;
+      if (jUnitResult) {
+        const failedTestCases =
+          jUnitResult.testsuite?.flatMap(
+            (testSuite) => testSuite.testcase?.filter((testCase) => !!testCase.failure) ?? [],
+          ) ?? [];
+        if (failedTestCases.length) {
+          const comment = getTestCasesText(failedTestCases);
+          await createCommentOnBitbucket({
+            content: {
+              raw: comment,
+            },
+          });
+        }
+      }
     }
 
     logger.log('Report uploaded successfully', name);

@@ -64,6 +64,8 @@ It takes the following arguments:
 - `-f [percentage]` or `--min-functions-coverage [percentage]` (optional): Optional threshold for the functions coverage value.
 - `-b [percentage]` or `--min-branches-coverage [percentage]` (optional): Optional threshold for the branches coverage value.
 - `-a` or `--add-build` (optional): Create a success/failed "build" as well besides the report.
+- `-j [path]` or `junit-path [path]`: (required for the `failed-test-comment` flag): The path to a junit XML file with unit test results.
+- `-t` or `--failed-test-comment`: Create a comment on a PR in case there are failed unit tests in the junit XML file.
 
 Ensure that the specified path leads to a V8 coverage report that can be passed to the Bitbucket API.
 
@@ -76,6 +78,8 @@ While some requests could be automatically authenticated running in a pipeline, 
 ### Other identifiers
 
 Since information is attached to a commit (even in case of a pull request), the library needs the BITBUCKET_REPO_FULL_NAME and BITBUCKET_COMMIT environment variables to do that. These two are standard Bitbucket pipeline variables, so there is no need to set them explicitly if running the script in a pipeline.
+
+The tool uses BITBUCKET_PR_ID for the `failed-test-comment` functionality.
 
 ## License
 
