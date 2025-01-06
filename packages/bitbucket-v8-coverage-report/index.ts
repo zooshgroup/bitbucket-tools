@@ -2,7 +2,7 @@
 
 import fs from 'fs/promises';
 import commandLineArgs from 'command-line-args';
-import { parse as parseJUnit, TestSuites } from 'junit2json';
+import { parse as parseJUnit, TestCase, TestSuites } from 'junit2json';
 import {
   createBuildOnBitbucket,
   createCommentOnBitbucket,
@@ -53,6 +53,26 @@ function getReportResult(
   }
   return true;
 }
+
+const getTestFailureText = (testCase: TestCase): string =>
+  testCase.failure
+    ?.map(
+      (failure) => `\`\`\`
+${failure.inner}
+\`\`\`
+`,
+    )
+    .join('\n') ?? '';
+
+const getTestCaseText = (testCase: TestCase): string =>
+  `## ${testCase.name}
+
+${getTestFailureText(testCase)}`;
+
+const getTestCasesText = (testCases: TestCase[]): string =>
+  `# ${testCases.length} test case(s) failed!
+
+${testCases.map(getTestCaseText).join('\n\n')}`;
 
 async function uploadReport() {
   try {
@@ -153,25 +173,10 @@ async function uploadReport() {
             (testSuite) => testSuite.testcase?.filter((testCase) => !!testCase.failure) ?? [],
           ) ?? [];
         if (failedTestCases.length) {
-          const comment = `# ${failedTestCases.length} test case(s) failed!
-
-${failedTestCases.map(
-  (testCase) => `## ${testCase.name}
-
-${testCase.failure
-  ?.map(
-    (failure) => `\`\`\`
-${failure.inner}
-\`\`\`
-
-`,
-  )
-  .join('\n')}`,
-)}`;
+          const comment = getTestCasesText(failedTestCases);
           await createCommentOnBitbucket({
             content: {
               raw: comment,
-              //markup: 'markdown',
             },
           });
         }
